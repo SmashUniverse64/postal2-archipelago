@@ -53,7 +53,7 @@ class Postal2Web(WebWorld):
             "English",
             "setup_en.md",
             "setup/en",
-            ["Postal 2 AP"],
+            ["TheDogNerd"],
         )
     ]
 

@@ -1,6 +1,6 @@
 # Postal 2 Archipelago
 
-Unofficial [Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign.
+Unofficial [Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign, by **TheDogNerd**.
 
 This is a fan project. It is not affiliated with Running With Scissors or ArchipelagoMW. Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays are out of v1.
 
@@ -38,6 +38,8 @@ Full setup, options, and version history: [`apworld/postal2/docs/setup_en.md`](a
 - A new save. Workshop saves are flagged cheated; achievements stay off.
 
 ## Steam Workshop
+
+Workshop title: **Postal 2 Archipelago Randomizer**.
 
 Upload **only** the compiled mutator: `Archipelago.u`, `Archipelago.int`, and a preview image. Do not upload UnrealScript, textures, sounds, maps, or stock game packages.
 

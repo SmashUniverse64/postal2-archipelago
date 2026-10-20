@@ -5,7 +5,7 @@ THIS MUTATOR DOES NOTHING BY ITSELF.
 You also need Archipelago 0.6.x, postal2.apworld, a locally generated seed, and Postal 2 Client connected to your room. The game talks to that client on 127.0.0.1:23981. If the client is not running, New Game will sit at Monday Home and wait.
 
 Download the matching apworld, YAML, and Postal 2 Client from GitHub:
-https://github.com/YOUR_GITHUB_USER/postal2-archipelago/releases
+https://github.com/SmashUniverse64/postal2-archipelago/releases
 
 Keep Workshop and GitHub on the same version (currently 1.0.26).
 
@@ -23,6 +23,6 @@ Scope
 - Time Warp replaces clock-out.
 
 Notes
-- Fan project. Not affiliated with Running With Scissors or ArchipelagoMW. You must own POSTAL 2.
+- By TheDogNerd. Fan project. Not affiliated with Running With Scissors or ArchipelagoMW. You must own POSTAL 2.
 - Workshop saves are flagged cheated. Achievements stay off.
 - Do not mix this mutator with a different apworld version.

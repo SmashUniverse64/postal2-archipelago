@@ -22,8 +22,8 @@ That fills `workshop/staging/` with the three files above. Version must match `a
 
 1. Open **POSTed** → Tools → **Upload to Steam Workshop**.
 2. Add the three files from `workshop/staging/`.
-3. Title: `Archipelago (Unofficial)`
-4. Paste `description.txt` into the description. Put the real GitHub Releases URL in the placeholder.
+3. Title: `Postal 2 Archipelago Randomizer`
+4. Paste `description.txt` into the description.
 5. Visibility: **Private**.
 6. Windows. Game **1415** (POSTAL 2). Do **not** require Paradise Lost DLC. If POSTed ticks it, remove it afterward in Steam → item → Owner Controls → Add/Remove Required DLC.
 7. Publish, then test on **retail** Postal 2 (Steam Complete): subscribe, New Game → Workshop → Archipelago, with Postal 2 Client listening on `127.0.0.1:23981`.
