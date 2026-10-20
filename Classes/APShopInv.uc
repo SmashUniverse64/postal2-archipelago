@@ -1,0 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+// Dummy inventory so vending machines can list an AP parcel.
+///////////////////////////////////////////////////////////////////////////////
+class APShopInv extends P2PowerupInv;
+
+defaultproperties
+{
+	MaxAmount=1
+	InventoryGroup=250
+	GroupOffset=1
+	ItemName="Archipelago Item"
+	PowerupName="Archipelago Item"
+}

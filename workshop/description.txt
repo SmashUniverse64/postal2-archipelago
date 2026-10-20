@@ -1,0 +1,28 @@
+Unofficial Archipelago randomizer for the original Monday–Friday POSTAL 2 campaign.
+
+THIS MUTATOR DOES NOTHING BY ITSELF.
+
+You also need Archipelago 0.6.x, postal2.apworld, a locally generated seed, and Postal 2 Client connected to your room. The game talks to that client on 127.0.0.1:23981. If the client is not running, New Game will sit at Monday Home and wait.
+
+Download the matching apworld, YAML, and Postal 2 Client from GitHub:
+https://github.com/YOUR_GITHUB_USER/postal2-archipelago/releases
+
+Keep Workshop and GitHub on the same version (currently 1.0.26).
+
+How to play
+1. Install Archipelago 0.6.x from https://archipelago.gg
+2. Install postal2.apworld (Launcher → Install APWorld). Restart the Launcher.
+3. Subscribe here (or copy Archipelago.u + Archipelago.int into Postal 2\System).
+4. Put postal2.yaml in Archipelago's Players folder, set your slot name, generate locally. Website generate cannot run this world yet. Hosts can upload a pre-generated zip.
+5. Open Postal 2 Client from the Archipelago Launcher and connect (host:port, slot, password).
+6. Start POSTAL 2 → New Game → Workshop → Archipelago. Use a new save.
+
+Scope
+- Monday–Friday only. Not Paradise Lost, not Apocalypse Weekend as its own campaign, not Eternal Damnation, not seasonal overlays.
+- Goal: finish all 19 weekday errands, then walk Home through the Apocalypse to the trailer.
+- Time Warp replaces clock-out.
+
+Notes
+- Fan project. Not affiliated with Running With Scissors or ArchipelagoMW. You must own POSTAL 2.
+- Workshop saves are flagged cheated. Achievements stay off.
+- Do not mix this mutator with a different apworld version.

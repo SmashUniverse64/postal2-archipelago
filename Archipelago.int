@@ -1,0 +1,7 @@
+[Public]
+Object=(Name=Archipelago.APGameInfo,Class=Class,MetaClass=Postal2Game.P2GameInfoSingle)
+
+[APGameInfo]
+GameName=Archipelago
+GameNameShort=Archipelago
+GameDescription=Unofficial Archipelago randomizer for the original Monday-Friday campaign. Requires Archipelago 0.6.x, postal2.apworld, and the Postal 2 Client.

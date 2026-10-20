@@ -1,0 +1,24 @@
+name: Dude
+game: Postal 2
+requires:
+  version: 0.6.0
+
+Postal 2:
+  progression_balancing: 50
+  accessibility: items
+  death_link: false
+  starting_day: monday  # monday, tuesday, wednesday, thursday, friday, or random
+  shuffle_weapons: true
+  random_weapon: true
+  traps: true
+  vending_sanity: true
+  vending_slots: 3
+  max_tokens: 12
+  lootsanity: false
+  crackola_sanity: true
+  atm_sanity: true
+  token_glow: true
+  token_heartbeat: true
+  melee_durability: false
+  piss_realism: false
+  piss_regen: 120  # seconds per pip when piss_realism is on; 30–180
