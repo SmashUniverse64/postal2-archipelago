@@ -67,7 +67,7 @@ Website generate cannot run this world until it is in Archipelago core. Generate
 
 1. Install [Archipelago 0.6.x](https://archipelago.gg).
 2. Install `postal2.apworld` from [Releases](../../releases) (Launcher → **Install APWorld**, or copy into `custom_worlds`). Restart the Launcher.
-3. Subscribe to the Steam Workshop mutator, **or** copy `Archipelago.u` and `Archipelago.int` from the same Release into Postal 2's `System` folder (Steam Complete). Pick one mutator source.
+3. Subscribe to the Steam Workshop mutator, **or** install `Archipelago.u` and `Archipelago.int` from [Releases](../../releases) with no Workshop (copy both into Postal 2's `System` folder). Pick one mutator source. Manual steps: [`docs/github-release.md`](docs/github-release.md).
 4. Copy `postal2.yaml` into Archipelago's `Players` folder. Set `name:` to your slot.
 5. Generate locally, then host or join the room.
 6. Launcher → **Postal 2 Client**. Connect with host:port, slot name, and password if any. Keep that window open.
