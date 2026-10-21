@@ -1,4 +1,4 @@
-# Postal 2 Archipelago 1.0.26
+# Postal 2 Archipelago 1.0.27
 
 Unofficial Archipelago randomizer for the original Monday–Friday POSTAL 2 campaign, by TheDogNerd.
 
@@ -54,7 +54,7 @@ Full setup, Time Warp, AP tokens, and YAML options (including Piss Realism and M
 
 ## Updating
 
-Download the new `Archipelago.u` and `Archipelago.int` over the old ones in `System`, and install the matching `postal2.apworld`. Stay on **1.0.26** for this seed line.
+Download the new `Archipelago.u` and `Archipelago.int` over the old ones in `System`, and install the matching `postal2.apworld`. Stay on **1.0.27** for this seed line.
 
 To remove the mutator, delete `Archipelago.u` and `Archipelago.int` from `System`.
 

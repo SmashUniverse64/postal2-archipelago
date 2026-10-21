@@ -4,7 +4,7 @@ Unofficial [Archipelago](https://archipelago.gg) randomizer for the original Mon
 
 Fan project. Not affiliated with Running With Scissors or ArchipelagoMW. v1 is the original week only: Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays stay out.
 
-**Current version: 1.0.26.** Keep the mutator and the apworld on the same version.
+**Current version: 1.0.27.** Keep the mutator and the apworld on the same version.
 
 **Goal:** finish all 19 weekday errands, then walk Home through the Apocalypse to the trailer.
 
@@ -112,7 +112,7 @@ make.bat
 python pack_release.py
 ```
 
-Output is `dist/1.0.26/` (`postal2.apworld`, `postal2.yaml`, `Archipelago.u`, `Archipelago.int`) and `workshop/staging/`.
+Output is `dist/1.0.27/` (`postal2.apworld`, `postal2.yaml`, `Archipelago.u`, `Archipelago.int`) and `workshop/staging/`.
 
 `scan_pickups.py` is a catalog scanner for the SDK `Maps` folder. Do not full-regen `catalog.py` unless you know how location IDs are assigned; inserting mid-list shifts later IDs.
 

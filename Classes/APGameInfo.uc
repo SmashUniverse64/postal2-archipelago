@@ -7684,6 +7684,14 @@ function ApplyTokenSpawnNudge(out vector Loc, string U)
 		}
 		return;
 	}
+	// Locker Room Health Pipe: catalog is in the east locker back. Aisle is -X.
+	if (U ~= "SC_POLICE_CrackPickup_01")
+	{
+		Loc.X -= 56;
+		if (Loc.Z > -4606)
+			Loc.Z = -4606;
+		return;
+	}
 	// Evidence Room bottom shelves: origin is against the brick, so the
 	// 34-radius token cylinder is inside the wall.
 	if (U ~= "SC_POLICE_GimpClothesPickup_01")
@@ -7694,6 +7702,17 @@ function ApplyTokenSpawnNudge(out vector Loc, string U)
 	if (U ~= "SC_POLICE_FlamePickup_01")
 	{
 		Loc.Y -= 56;
+		return;
+	}
+	if (U ~= "SC_POLICE_ShotGunPickup_01")
+	{
+		Loc.Y -= 56;
+		return;
+	}
+	// Clinic Area Warehouse North: Medkit 2 catalog is west of the shelf.
+	if (U ~= "SC_INDUSTRY_MedKitPickup_02")
+	{
+		Loc.X += 72;
 		return;
 	}
 }
@@ -7762,7 +7781,8 @@ function UncoverIfBuried(Pickup Item)
 	PullFromWall(Item);
 
 	W = APWorldPickup(Item);
-	if (W != None && W.APUnique ~= "SC_POLICE_CopClothesPickup_01")
+	if (W != None && (W.APUnique ~= "SC_POLICE_CopClothesPickup_01"
+		|| W.APUnique ~= "SC_POLICE_CrackPickup_01"))
 		return;
 
 	if (PickupHasHeadroom(Item))
@@ -7987,7 +8007,8 @@ function APWorldPickup SpawnAPWorldAt(vector Loc, string U)
 	Try = Loc;
 	Try.Z += 16;
 	Token = Spawn(class'APWorldPickup',,, Try);
-	if (Token == None && !(U ~= "SC_POLICE_CopClothesPickup_01"))
+	if (Token == None && !(U ~= "SC_POLICE_CopClothesPickup_01")
+		&& !(U ~= "SC_POLICE_CrackPickup_01"))
 	{
 		for (i = 1; i <= 8; i++)
 		{

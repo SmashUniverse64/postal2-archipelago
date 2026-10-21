@@ -1,7 +1,7 @@
 {
   "game": "Postal 2",
   "minimum_ap_version": "0.6.0",
-  "world_version": "1.0.26",
+  "world_version": "1.0.27",
   "compatible_version": 6,
   "authors": ["TheDogNerd"]
 }
