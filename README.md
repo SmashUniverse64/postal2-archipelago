@@ -15,13 +15,15 @@ When you start the game, you will load into your **Starting Day** with one rando
 
 Which loot locations become tokens is chosen **per seed**. **Max Tokens Per Map** (`max_tokens`, default 12, range 6–15) is the maximum cap of AP tokens that can spawn on each map. Each chosen pile is its own named check (`Main Street - Shotgun Stereo House Bedroom`). Leftover vanilla piles next to a token stay usable (medkits, ammo, guns).
 
-Does that sound daunting? It might be if you aren't familiar with all of the loot locations, so there are some features in the mod designed to help with the hunting process! The YAML options **Token Glow** and **Token Heartbeat** make it easier to find remaining AP Tokens by playing audio cues and showing very obvious visual effects that can even be seen through walls. In addition, there's a new **Hint Flare** item that fires a rocket from every AP Token on the current map into the sky. Follow the sound and the resulting boom!
+Every weekday you unlock, you gain access to 'Hunt Maps,' maps seeded with AP Tokens. View your currently unlocked Hunt Maps using your map. Visiting these hunt maps on their chosen day counts as a check. Keep in mind that you can only see AP Tokens (and collect the visit check) on each map on its chosen day, so make sure you're on the correct day to grab them all!
+
+Does that sound daunting? It might be if you aren't familiar with all the loot locations, so the mod includes features designed to help with the hunting process! The YAML options **Token Glow** and **Token Heartbeat** make it easier to find remaining AP Tokens. In addition, there's a new **Hint Flare** item that fires a rocket from every AP Token on the current map into the sky. Follow the sound and the resulting boom!
 
 Kickable ATMs, Crackola machines, and vending machines are checks too when those YAML options are on. Vending machines can also stock Archipelago items, with some configurable options. Use the new legend in the bottom-right corner of the map to track your progress!
 
 ### Time Warp
 
-You no longer automatically end the day when all of your errands are complete for the day. So, how do you get to the other days? 
+You no longer automatically end the day when all your errands are complete. So, how do you get to the other days? 
 
 You have been given a new **Time Warp** item which is in your Other slot (where your Map is).
 
@@ -29,9 +31,7 @@ Select and use Time Warp to see a brand new warp menu. You can see a list of all
 
 **But how are the one-off story maps handled?**
 
-Keys **6–0** return to Library, Burning Library, Brewery, Napalm Factory, and Parcel Center after you have left those maps one time. This is in case you miss any AP tokens during your first visit!
-
-Every weekday you unlock, you gain access to 'Hunt Maps,' maps seeded with AP Tokens. View your currently unlocked Hunt Maps using your map. Visiting these hunt maps on their chosen day counts as a check. Keep in mind that you can only see AP Tokens (and collect the visit check) on each map on its chosen day, so make sure you warp to the correct day to grab them all!
+Keys **6–0** return to Library, Burning Library, Brewery, Napalm Factory, and Parcel Center after you leave those maps once. This is in case you miss any AP tokens during your first visit!
 
 ## YAML options
 
@@ -51,8 +51,8 @@ Piss regenerates really, really slowly, with a configurable value in the options
 
 - **Starting Day** (YAML option, defaults to Monday). Choose which day you start on or go all random. The order of your week is different every run.
 - **Traps** (YAML option, on by default). A few silly and a few evil traps for you to discover...
-- **Death Link!**
-- **Token Glow and Token Heartbeat** (YAML option, on by default). By default, AP tokens both emit a glow that you can see from the outside of buildings and create a heartbeat sound to help you track them down more easily. But if you want to make it a super difficult challenge for yourself, you can disable both of these! Some of these pickups are really tricky to find without it, so it's a real test of your game knowledge!
+- **Death Link support**
+- **Token Glow and Token Heartbeat** (YAML option, on by default). By default, AP tokens both emit a glow you can see from outside buildings and create a heartbeat sound to help you track them down more easily. But if you want to make it a super difficult challenge for yourself, you can disable both! Some of these pickups are really tricky to find without it, so it's a real test of your game knowledge!
 
 ### Install Guide
 
