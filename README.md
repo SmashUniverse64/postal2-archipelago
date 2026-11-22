@@ -2,7 +2,7 @@
 
 # Postal 2 Archipelago
 
-[Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign, by **SmashUniverse64/TheDogNerd**.
+[Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign.
 
 **Goal:** finish all 19 weekday errands, then walk Home through the Apocalypse to your trailer.
 
