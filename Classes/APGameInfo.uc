@@ -85,6 +85,8 @@ var bool bPendingPissTrap;
 var int StartDayWaitLeft;
 var bool bPendingStartDayReload;
 var float StartDayReloadAt;
+// Incoming kill in progress. Keeps that death from being sent back out.
+var bool bDeathFromLink;
 
 ///////////////////////////////////////////////////////////////////////////////
 event PostTravel(P2Pawn PlayerPawn)
@@ -5333,6 +5335,8 @@ function SetOption(string Key, int Value)
 	}
 	else if (Key ~= "LOOTSANITY")
 		GS.bLootSanity = On;
+	else if (Key ~= "DEATHLINK")
+		GS.bDeathLink = On;
 	else if (Key ~= "STARTDAY")
 	{
 		if (Value < 0)
@@ -5393,6 +5397,74 @@ function bool LootSanityEnabled()
 	local APGameState GS;
 	GS = APState();
 	return (GS != None && GS.bLootSanity);
+}
+
+function bool DeathLinkEnabled()
+{
+	local APGameState GS;
+	GS = APState();
+	return (GS != None && GS.bDeathLink);
+}
+
+function KillFromDeathLink(string Cause)
+{
+	local P2Player P;
+	local P2Pawn Dude;
+	local int i;
+
+	if (!DeathLinkEnabled())
+		return;
+	if (IsWaitingForAPClient())
+		return;
+	if (IsIntroMap() || IsCinematic() || IsMainMenuMap() || IsFinishedDayMap())
+		return;
+	if (Level.Pauser != None)
+		return;
+	P = GetPlayer();
+	if (P == None || P.bDeleteMe || P.IsInState('Dead') || P.IsInState('GameEnded'))
+		return;
+	Dude = P2Pawn(P.Pawn);
+	if (Dude == None || Dude.bDeleteMe || Dude.Health <= 0 || Dude.IsInState('Dying'))
+		return;
+
+	i = InStr(Cause, Chr(10));
+	while (i != -1)
+	{
+		Cause = Left(Cause, i)$" "$Mid(Cause, i + 1);
+		i = InStr(Cause, Chr(10));
+	}
+	i = InStr(Cause, Chr(13));
+	while (i != -1)
+	{
+		Cause = Left(Cause, i)$Mid(Cause, i + 1);
+		i = InStr(Cause, Chr(13));
+	}
+	if (Len(Cause) > 180)
+		Cause = Left(Cause, 180);
+	if (Cause == "")
+		Cause = "Death Link";
+
+	bDeathFromLink = true;
+	ShowAPMessage(Cause);
+	P.bGodMode = false;
+	Dude.Health = 0;
+	Dude.Died(None, class'ExplodedDamage', Dude.Location);
+	if (!P.IsInState('Dead'))
+		bDeathFromLink = false;
+}
+
+function ReportDudeDeath()
+{
+	if (!DeathLinkEnabled())
+		return;
+	if (bDeathFromLink)
+	{
+		bDeathFromLink = false;
+		return;
+	}
+	EnsureBridge();
+	if (Bridge != None)
+		Bridge.SendLine("DIED");
 }
 
 function float CatalogMatchRadius()

@@ -51,6 +51,8 @@ var travel bool bPissRealism;
 var travel bool bPissRealismPrimed;
 var travel int PissRegen;
 var travel bool bLootSanity;
+// Travels so a death before the client reconnects still counts.
+var travel bool bDeathLink;
 var travel array<string> MeleeDurKey;
 var travel array<int> MeleeDurVal;
 var travel bool bGimpTrap;

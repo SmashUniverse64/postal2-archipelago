@@ -17,6 +17,20 @@ function Possess(Pawn aPawn)
 	ConsoleCommand("SET Input NumPad5");
 }
 
+function PawnDied(Pawn P)
+{
+	local APGameInfo G;
+
+	// Report before Super unpossesses. A second PawnDied from the carcass is ignored.
+	if (P == Pawn && !IsInState('Dead'))
+	{
+		G = APGameInfo(Level.Game);
+		if (G != None)
+			G.ReportDudeDeath();
+	}
+	Super.PawnDied(P);
+}
+
 function AddWeaponSelector()
 {
 	CustomWeaponSelectorClassName = "";

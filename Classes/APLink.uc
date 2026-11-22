@@ -569,6 +569,11 @@ function HandleLine(string Line)
 		if (APGame != None)
 			APGame.ApplyAPSeed(Arg, false);
 	}
+	else if (Cmd == "DEATHLINK")
+	{
+		if (APGame != None)
+			APGame.KillFromDeathLink(Arg);
+	}
 }
 
 defaultproperties

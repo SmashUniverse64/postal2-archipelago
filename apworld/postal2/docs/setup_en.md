@@ -101,6 +101,8 @@ First public release. Generate a **new seed**. Delete `lootsanity` from an older
 
 **Debug commands.** Token dump, token boom, item resync, location print, and token screenshots are not in this build. `apconnect`, `apstatus`, and `apdisconnect` stay.
 
+**Death Link.** Off by default. With it on, the Dude dying tells every other player who turned Death Link on. The cause is "The Dude died." A death from them kills the Dude, then the game loads the last save, the same as any other death. Same seed. Restart Postal 2 and the Postal 2 Client.
+
 ## Developers
 
 Compile the mutator from POSTed (`Archipelago/make.bat`) if you changed UnrealScript. Pack the world with `python pack_apworld.py` from `Archipelago/apworld`. Stage GitHub Release and Workshop files with `python pack_release.py` from the repo root.

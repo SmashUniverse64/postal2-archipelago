@@ -51,6 +51,16 @@ def is_valid_check_unique(unique: str) -> bool:
     return not any(ch in unique for ch in '=()," \t')
 
 
+def one_line(text: str, fallback: str) -> str:
+    """Collapse a Death Link cause to a single short ASCII-safe line."""
+    cause = " ".join((text or "").replace("\x00", " ").split())
+    if not cause:
+        cause = fallback
+    if len(cause) > 180:
+        cause = cause[:180].rstrip()
+    return cause or fallback
+
+
 def cash_face_value(item_name: str) -> int:
     """Face value for cash filler names like $5, $20, $100."""
     raw = (item_name or "").strip()
@@ -221,6 +231,7 @@ def _build_context_class():
                 async_start(self._on_print_json(args), name="postal2-print")
 
         async def _on_connected(self) -> None:
+            await self.update_death_link(bool((self.slot_data or {}).get("death_link")))
             if self._seed_changed:
                 self._check_queue.clear()
                 self._granted_count = 0
@@ -295,6 +306,7 @@ def _build_context_class():
                 regen = 180
             await self.send_game("OPTION PISSREGEN " + str(regen))
             await self.send_game("OPTION LOOTSANITY " + ("1" if slot.get("lootsanity", False) else "0"))
+            await self.send_game("OPTION DEATHLINK " + ("1" if slot.get("death_link") else "0"))
 
         async def _send_scrounge(self) -> None:
             from .catalog import SCROUNGE_CATALOG
@@ -577,8 +589,17 @@ def _build_context_class():
                 await self._push_tracker()
                 if cmd == "RESYNC":
                     await self.send_game("MSG AP items reapplied from the multiworld.")
+            elif cmd == "DIED":
+                if "DeathLink" not in self.tags or not self._server_socket_up():
+                    return
+                await self.send_death(one_line(arg, "The Dude died."))
             else:
                 logger.debug("unknown game command: %s", line)
+
+        def on_deathlink(self, data: dict) -> None:
+            super().on_deathlink(data)
+            cause = one_line(str(data.get("cause") or ""), "Death Link")
+            async_start(self.send_game("DEATHLINK " + cause), name="postal2-deathlink")
 
         async def on_game_connect(self, arg: str) -> None:
             parts = arg.split(" ", 2)

@@ -6,7 +6,7 @@ requires:
 Postal 2:
   progression_balancing: 50
   accessibility: items
-  death_link: false
+  death_link: false  # off by default. On: Dude's death kills other Death Link players; their deaths reload your last save
   starting_day: monday  # monday, tuesday, wednesday, thursday, friday, or random
   shuffle_weapons: true
   random_weapon: true
