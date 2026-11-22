@@ -28,6 +28,8 @@ defaultproperties
 	DelayToNotifyTime=0
 	ExplodingSound=None
 	LifeSpan=3.0
+	// Emitter defaults to 12000. A flare on the far side of a Postal 2 map is past that.
+	CullDistance=0
 	AutoDestroy=true
 	bCollideActors=false
 	bBlockZeroExtentTraces=false
@@ -47,7 +49,7 @@ defaultproperties
 		SizeScale(0)=(RelativeTime=0.000000,RelativeSize=0.000000)
 		SizeScale(1)=(RelativeTime=0.100000,RelativeSize=0.700000)
 		SizeScale(2)=(RelativeTime=1.000000,RelativeSize=1.000000)
-		StartSizeRange=(X=(Min=150.000000,Max=200.000000))
+		StartSizeRange=(X=(Min=320.000000,Max=420.000000))
 		InitialParticlesPerSecond=60.000000
 		AutomaticInitialSpawning=False
 		DrawStyle=PTDS_AlphaBlend
@@ -72,7 +74,7 @@ defaultproperties
 		RespawnDeadParticles=False
 		StartLocationShape=PTLS_Sphere
 		SphereRadiusRange=(Min=100.000000,Max=300.000000)
-		StartSizeRange=(X=(Min=0.500000,Max=1.000000),Y=(Min=10.000000,Max=30.000000))
+		StartSizeRange=(X=(Min=1.000000,Max=2.000000),Y=(Min=24.000000,Max=70.000000))
 		InitialParticlesPerSecond=100.000000
 		AutomaticInitialSpawning=False
 		Texture=Texture'nathans.Skins.softwhitedot'

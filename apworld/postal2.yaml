@@ -14,7 +14,6 @@ Postal 2:
   vending_sanity: true
   vending_slots: 3
   max_tokens: 12
-  lootsanity: false
   crackola_sanity: true
   atm_sanity: true
   token_glow: true

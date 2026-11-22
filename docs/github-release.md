@@ -1,6 +1,10 @@
-# Postal 2 Archipelago 1.0.27
+# Postal 2 Archipelago 1.1
 
 Unofficial Archipelago randomizer for the original Monday–Friday POSTAL 2 campaign, by TheDogNerd.
+
+This is the first public release. Generate a **new seed**. If an older player YAML still has `lootsanity`, delete that line before you generate.
+
+What changed from the 1.0 playtest line: every loot pile has a place name, unreachable piles stay out of the token roll, and a few gated piles only roll on a hunt day when you can reach them (West Mall Toy Store backrooms and loading dock on Thursday, West Mall upper platform on Friday, Napalm Factory Exterior gate piles on Thursday). Evidence Room bottom-shelf tokens sit far enough forward to grab. The hint-flare rocket is larger. Lootsanity is not a YAML option.
 
 This release is the **manual install**. You do not need the Steam Workshop. Copy two files into Postal 2's `System` folder, then install the apworld in Archipelago.
 
@@ -54,7 +58,7 @@ Full setup, Time Warp, AP tokens, and YAML options (including Piss Realism and M
 
 ## Updating
 
-Download the new `Archipelago.u` and `Archipelago.int` over the old ones in `System`, and install the matching `postal2.apworld`. Stay on **1.0.27** for this seed line.
+Download the new `Archipelago.u` and `Archipelago.int` over the old ones in `System`, and install the matching `postal2.apworld`. Stay on **1.1** for this seed line.
 
 To remove the mutator, delete `Archipelago.u` and `Archipelago.int` from `System`.
 

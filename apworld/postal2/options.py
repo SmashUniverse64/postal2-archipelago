@@ -62,13 +62,18 @@ class MaxTokens(Range):
     """Maximum Archipelago tokens on each hunt map. Each map rolls 6 through
     this number, then
     keeps at most as many as it has real loot piles that fit the spacing
-    rules. Default 12. Ignored if Lootsanity is on."""
+    rules. Default 12."""
     display_name = "Max Tokens Per Map"
     range_start = 6
     range_end = 15
     default = 12
 
 
+# Parked. Not on Postal2Options, so it does not appear in the YAML or the
+# website. choose_scrounge still accepts lootsanity, and the mutator still
+# honors OPTION LOOTSANITY. To offer it again, add `lootsanity: Lootsanity`
+# below and pass bool(self.options.lootsanity) from generate_early and
+# fill_slot_data instead of the hardcoded False.
 class Lootsanity(Toggle):
     """When on, every eligible world loot pile becomes an Archipelago token.
     Blocked / unreachable piles stay out. Hunt days still choose which maps
@@ -141,7 +146,6 @@ class Postal2Options(PerGameCommonOptions):
     vending_sanity: VendingSanity
     vending_slots: VendingSlots
     max_tokens: MaxTokens
-    lootsanity: Lootsanity
     crackola_sanity: CrackolaSanity
     atm_sanity: ATMSanity
     token_glow: TokenGlow

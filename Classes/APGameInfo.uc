@@ -7692,22 +7692,25 @@ function ApplyTokenSpawnNudge(out vector Loc, string U)
 			Loc.Z = -4606;
 		return;
 	}
-	// Evidence Room bottom shelves: origin is against the brick, so the
-	// 34-radius token cylinder is inside the wall.
-	if (U ~= "SC_POLICE_GimpClothesPickup_01")
+	// Evidence Room bottom shelves. The catalog origin is against the brick,
+	// so the 34-radius token sits inside the shelf. South wall (dynamite,
+	// shotgun) pulls toward -Y. North wall (gimp suit) pulls toward +Y.
+	// Z below -5268 on the north wall keeps the next shelf up. The armory
+	// row near X -2600 is outside this box.
+	if (Left(U, 10) ~= "SC_POLICE_"
+		&& Loc.X > -4900 && Loc.X < -4300
+		&& Loc.Z > -5295 && Loc.Z < -5240)
 	{
-		Loc.Y += 56;
-		return;
-	}
-	if (U ~= "SC_POLICE_FlamePickup_01")
-	{
-		Loc.Y -= 56;
-		return;
-	}
-	if (U ~= "SC_POLICE_ShotGunPickup_01")
-	{
-		Loc.Y -= 56;
-		return;
+		if (Loc.Y > -10220 && Loc.Y < -10130)
+		{
+			Loc.Y -= 56;
+			return;
+		}
+		if (Loc.Y > -10620 && Loc.Y < -10540 && Loc.Z < -5268)
+		{
+			Loc.Y += 56;
+			return;
+		}
 	}
 	// Clinic Area Warehouse North: Medkit 2 catalog is west of the shelf.
 	if (U ~= "SC_INDUSTRY_MedKitPickup_02")

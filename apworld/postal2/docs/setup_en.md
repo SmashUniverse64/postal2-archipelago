@@ -2,7 +2,7 @@
 
 Unofficial Archipelago world for the original Monday–Friday campaign. Website generate cannot run this world until it is in Archipelago core: generate locally. Hosts can upload a pre-generated zip.
 
-You need **both** pieces on the same version (currently **1.0.27**): this `postal2.apworld`, and the in-game mutator (`Archipelago.u` + `Archipelago.int`) from Steam Workshop or the matching GitHub Release.
+You need **both** pieces on the same version (currently **1.1**): this `postal2.apworld`, and the in-game mutator (`Archipelago.u` + `Archipelago.int`) from Steam Workshop or the matching GitHub Release.
 
 1. Install [Archipelago 0.6.x](https://archipelago.gg).
 2. Install this `postal2.apworld` (Launcher → Install APWorld, or copy into `custom_worlds`). Restart the Launcher.
@@ -15,7 +15,7 @@ You need **both** pieces on the same version (currently **1.0.27**): this `posta
 
 Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays are not part of this world. Workshop saves are flagged cheated; achievements stay off.
 
-Moving to a new **0.x** or **1.x** line usually needs a **new seed**. Stay on current **1.0.27** unless you are generating.
+Moving to a new **0.x** or **1.x** line usually needs a **new seed**. Stay on current **1.1** unless you are generating.
 
 ## Versions
 
@@ -83,6 +83,21 @@ Starting day and a shuffled week.
 **Piss Realism.** YAML `piss_realism` (off by default). Bladder starts at 1/20. Regen seconds is YAML `piss_regen` (default 120, range 30–180). Near 18/20 the Dude uses the Friday clinic “have to pee” lines. At 20/20 he takes 1 damage per second (`GonorrheaDamage`, cannot kill) until he goes. Once he starts peeing he cannot zip up until the meter is under 10. Water bottles are $5 on every vending machine and add 5 instantly; Crackola also adds 5. With the option on, Water Bottles are also junk in the item pool (grey AP tokens, 8 copies plus leftover filler). Restart Postal 2 and Postal 2 Client; pack apworld. Generate a **new seed** for bottles in the pool or to change regen.
 
 **Lootsanity pause map.** Opening the map with Lootsanity no longer runaway-loops remaining-token counts (`CountCatalogLeftForMap`). Counts are cached after catch-up instead of scanning every catalog unique every frame. Restart Postal 2; same save.
+
+### 1.1
+First public release. Generate a **new seed**. Delete `lootsanity` from an older `postal2.yaml` before you generate. Restart the Archipelago Launcher after installing the apworld, and restart Postal 2 after replacing the mutator.
+
+**Loot names.** Every token uses a hand-written place name in hints, spoilers, and the tracker.
+
+**Unreachable piles.** Piles outside the map, past a load zone, or clipped out of reach stay out of the token roll.
+
+**Gates.** A few piles only roll when that map's hunt day can reach them. West Mall Toy Store backrooms and the loading dock roll on Thursday (Get Krotchy). West Mall's secret upper platform (Shears and Grenade Launcher) rolls on Friday. Napalm Factory Exterior piles inside the factory gate (Baseball Bat 1, Dynamite 4, 5, and 6) roll on Thursday. That gate locks on Friday after Get Napalm.
+
+**Grab range.** Police Station Evidence Room bottom-shelf tokens are pulled forward so Dude can pick them up.
+
+**Hint flare.** The rocket is larger, and the burst is no longer hidden by the engine's distance cull.
+
+**Lootsanity.** Not a YAML option. Delete `lootsanity` from an older player YAML.
 
 ## Developers
 

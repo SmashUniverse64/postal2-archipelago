@@ -4,7 +4,7 @@ Unofficial [Archipelago](https://archipelago.gg) randomizer for the original Mon
 
 Fan project. Not affiliated with Running With Scissors or ArchipelagoMW. v1 is the original week only: Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays stay out.
 
-**Current version: 1.0.27.** Keep the mutator and the apworld on the same version.
+**Current version: 1.1.** Keep the mutator and the apworld on the same version.
 
 **Goal:** finish all 19 weekday errands, then walk Home through the Apocalypse to the trailer.
 
@@ -24,9 +24,9 @@ Each hunt map is assigned one weekday. AP tokens and the map-visit check spawn o
 
 World pickups that are Archipelago locations appear as an **AP token** (the Archipelago logo). Useful items keep the color logo. Filler and traps use a greyscale logo.
 
-Which piles become tokens is chosen **per seed** from a catalog of real loot in the maps. **Max Tokens Per Map** (`max_tokens`, default 12, range 6–15) is the cap; each hunt map rolls 6 through that number. Each chosen pile is its own named check (`Main Street - Shotgun Stereo House Bedroom`). Leftover vanilla piles next to a token stay usable (heal, ammo, guns); only the logo is the check. Piles past load zones or inside unbreakable boxes are never tokens.
+Which piles become tokens is chosen **per seed** from a catalog of real loot in the maps. **Max Tokens Per Map** (`max_tokens`, default 12, range 6–15) is the cap; each hunt map rolls 6 through that number. Each chosen pile is its own named check (`Main Street - Shotgun Stereo House Bedroom`). Leftover vanilla piles next to a token stay usable (heal, ammo, guns); only the logo is the check. Piles past load zones or inside unbreakable boxes are never tokens. A few piles behind weekday gates are only rolled when that map's hunt day can reach them.
 
-**Lootsanity** turns every eligible catalog pile into a token. **Token Glow** and **Token Heartbeat** mark remaining checks (heartbeat gets faster and louder as you near a token). **Hint Flare** (junk; also $30 on ATF/fast-food machines) fires a harmless noclip rocket from every AP token on the current map so you can see and hear them.
+**Token Glow** and **Token Heartbeat** mark remaining checks (heartbeat gets faster and louder as you near a token). **Hint Flare** (junk; also $30 on ATF/fast-food machines) fires a harmless noclip rocket from every AP token on the current map so you can see and hear them.
 
 Map-visit checks fire once per map, on that map’s hunt day. Kickable ATMs, Crackola machines, and opening ATF/food vending menus are checks too when those YAML options are on. Vending machines can stock Archipelago parcels with real item names and scouted prices.
 
@@ -46,7 +46,7 @@ The bladder starts at 1 out of 20. **Piss Regen Seconds** (`piss_regen`, default
 
 ### Other knobs
 
-Starting Day, Shuffle Weapons, Random Weapon, Max Tokens Per Map, Lootsanity, Token Glow, Token Heartbeat, Vending / Crackola / ATM sanity, traps, Death Link. With Shuffle Weapons on you start unarmed; Dusters, Bali, Krotchy Grenade, Box Launcher, and Cat Launcher sit in the unlock pools with the other weapons.
+Starting Day, Shuffle Weapons, Random Weapon, Max Tokens Per Map, Token Glow, Token Heartbeat, Vending / Crackola / ATM sanity, traps, Death Link. With Shuffle Weapons on you start unarmed; Dusters, Bali, Krotchy Grenade, Box Launcher, and Cat Launcher sit in the unlock pools with the other weapons.
 
 Full setup, options, and version history: [`apworld/postal2/docs/setup_en.md`](apworld/postal2/docs/setup_en.md). Game tab: [`apworld/postal2/docs/en_Postal 2.md`](apworld/postal2/docs/en_Postal 2.md).
 
@@ -112,7 +112,7 @@ make.bat
 python pack_release.py
 ```
 
-Output is `dist/1.0.27/` (`postal2.apworld`, `postal2.yaml`, `Archipelago.u`, `Archipelago.int`) and `workshop/staging/`.
+Output is `dist/1.1/` (`postal2.apworld`, `postal2.yaml`, `Archipelago.u`, `Archipelago.int`) and `workshop/staging/`.
 
 `scan_pickups.py` is a catalog scanner for the SDK `Maps` folder. Do not full-regen `catalog.py` unless you know how location IDs are assigned; inserting mid-list shifts later IDs.
 

@@ -86,15 +86,17 @@ class Postal2World(World):
             start = self.random.randint(0, 4)
         self.start_day = start
         self.day_order = choose_day_order(self.random, start)
-        self.scrounge_chosen = choose_scrounge(
-            self.random,
-            max_tokens=int(self.options.max_tokens.value),
-            lootsanity=bool(self.options.lootsanity),
-        )
-        self.scrounge_uniques = {e["unique"] for e in self.scrounge_chosen}
         self.map_days = choose_map_days(
             self.random, start_day=start, day_order=self.day_order
         )
+        self.scrounge_chosen = choose_scrounge(
+            self.random,
+            max_tokens=int(self.options.max_tokens.value),
+            # Lootsanity is parked. See options.Lootsanity.
+            lootsanity=False,
+            hunt_days=self.map_days,
+        )
+        self.scrounge_uniques = {e["unique"] for e in self.scrounge_chosen}
         max_slots = int(self.options.vending_slots.value)
         if not self.options.vending_sanity:
             max_slots = 0
@@ -329,7 +331,9 @@ class Postal2World(World):
             "vending_slots": int(self.options.vending_slots.value),
             "vending_counts": dict(getattr(self, "vending_counts", {})),
             "max_tokens": int(self.options.max_tokens.value),
-            "lootsanity": bool(self.options.lootsanity.value),
+            # Kept so the client still sends OPTION LOOTSANITY 0. An older
+            # seed that already stored true still enables the parked path.
+            "lootsanity": False,
             "crackola_sanity": bool(self.options.crackola_sanity.value),
             "atm_sanity": bool(self.options.atm_sanity.value),
             "scrounge": [e["unique"] for e in getattr(self, "scrounge_chosen", [])],
@@ -371,7 +375,6 @@ try:
             game_name="Postal 2",
             component_type=Type.CLIENT,
             supports_uri=True,
-            description="Connect Postal 2 to Archipelago. Keep this open while you play.",
         )
     )
 except Exception:

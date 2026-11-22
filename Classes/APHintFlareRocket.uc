@@ -90,8 +90,10 @@ defaultproperties
 	RemoteRole=ROLE_None
 	DrawType=DT_StaticMesh
 	StaticMesh=StaticMesh'stuff.stuff1.launcherrocket'
-	DrawScale=0.55
-	AmbientGlow=180
+	// Larger than a fired launcher rocket (scale 1) so the trail reads across a map.
+	DrawScale=2.0
+	AmbientGlow=255
+	CullDistance=0
 	CollisionRadius=1
 	CollisionHeight=1
 	Physics=PHYS_None

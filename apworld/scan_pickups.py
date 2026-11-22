@@ -139,8 +139,10 @@ BLOCKED_SPOTS = [
     ("RWSBLOCK", "MP5AmmoPickup", -7576.1, 1960.2, -386.5, 80.0),
     ("RWSBLOCK", "GSelectAmmoPickup", -7576.1, 1960.2, -386.5, 80.0),
     ("RWSBLOCK", "BoxLauncherPickup", -7576.1, 1960.2, -386.5, 80.0),
-    # Home Medkit 15: past a load zone. Tight radius so Medkit 14 (~43 UU away) stays.
+    # Home Medkit 15: past a load zone. Radius 32 leaves Medkit 14, blocked below.
     ("SUBURBS-3", "MedKitPickup", 5874.6, -2717.8, -4782.0, 32.0),
+    # Home Medkit 14: same load zone, 43 UU from Medkit 15.
+    ("SUBURBS-3", "MedKitPickup", 5835.8, -2698.2, -4782.0, 20.0),
     ("SUBURBS-3", "KevlarPickup", 10668.0, -12391.0, -6154.0, 80.0),
     # Grenade 13 is ~29 UU from 14; radius 40 covers both. Next grenade is thousands away.
     ("SUBURBS-3", "GrenadePickup", 10622.0, -12459.0, -6159.0, 40.0),
@@ -168,8 +170,9 @@ BLOCKED_SPOTS = [
     ("HIGHLANDS", "GaryHeadPickup", -6972.0, -654.0, 0.0, 40.0),
     ("HIGHLANDS", "PistolPickup", -5541.4, -1011.7, 0.0, 40.0),
     ("HIGHLANDS", "ShotGunPickup", -5526.3, -969.7, 0.0, 40.0),
-    # Trainyard Gas Can 3: unreachable. Tight radius so Gas Can 4 (~45 UU away) stays.
+    # Trainyard Gas Can 3 and 4: unreachable, 45 UU apart.
     ("HIGHLANDS", "GasCanPickup", 1646.0, -10207.0, -1004.0, 20.0),
+    ("HIGHLANDS", "GasCanPickup", 1683.0, -10182.0, -1004.0, 20.0),
     ("HIGHLANDS", "SledgePickup", 1687.0, -9783.7, -972.0, 40.0),
     ("SLAUGHTERHOUSE", "CatnipPickup", -3342.0, -5186.0, 0.0, 40.0),
     ("SLAUGHTERHOUSE", "FastFoodPickup", -1494.0, -5074.8, 0.0, 50.0),
@@ -184,6 +187,46 @@ BLOCKED_SPOTS = [
     # Police Station Catnip 1: inside a cardboard box. Tight so Catnip 2 stays.
     ("POLICE", "CatnipPickup", -5415.0, -13112.0, -5018.0, 40.0),
     ("BREWERY", "CrackColaPickup", -1819.3, -204.0, 0.0, 40.0),
+    # Editor pass: outside the map, past a load zone, or clipped out of reach.
+    # Tight radii are the piles that sit near a check that stays.
+    ("SUBURBS-2", "RadarTargetPickup", -248.0, -7408.0, -5438.0, 40.0),
+    ("GREENBELT1", "MedKitPickup", -3665.0, -994.0, -1403.0, 40.0),
+    ("GREENBELT1", "MedKitPickup", -3579.0, -1057.0, -1403.0, 40.0),
+    ("GREENBELT1", "MedKitPickup", -3577.5, -1013.9, -1403.0, 40.0),
+    ("GREENBELT1", "MedKitPickup", -2904.0, 444.0, -966.0, 40.0),
+    ("SUBURBS-3", "RadarPickup", 3840.0, -12416.0, -4480.0, 40.0),
+    ("RWSBLOCK", "GSelectAmmoPickup", 1210.2, 3919.5, -955.3, 40.0),
+    ("HIGHLANDS", "RadarPickup", 1647.0, -9705.0, -1030.0, 40.0),
+    ("HIGHLANDS", "MoneyPickup", 2076.0, -9496.0, -848.0, 40.0),
+    ("HIGHLANDS", "CatnipPickup", 1621.0, -9729.0, -1030.0, 40.0),
+    ("HIGHLANDS", "ChainsawPickup", 1612.2, -10141.5, -1023.0, 40.0),
+    ("HIGHLANDS", "CopRadarPlugPickup", 2000.0, -9509.0, -850.0, 40.0),
+    ("HIGHLANDS", "DogTreatBoxPickup", 1627.0, -9753.0, -1009.0, 40.0),
+    ("HIGHLANDS", "FastFoodPickup", 1846.0, -9715.0, -1017.0, 40.0),
+    ("HIGHLANDS", "FastFoodPickup", 1871.2, -9679.4, -1017.0, 40.0),
+    ("HIGHLANDS", "FastFoodPickup", 1880.5, -9716.9, -1024.8, 40.0),
+    ("HIGHLANDS", "FastFoodPickup", 1920.8, -9687.4, -1017.0, 40.0),
+    ("HIGHLANDS", "GunRadarPlugPickup", 1955.0, -9511.0, -850.0, 40.0),
+    ("HIGHLANDS", "KevlarPickup", 1741.0, -10306.0, -825.0, 40.0),
+    ("HIGHLANDS", "ScissorsPickup", 2429.0, -9608.0, -1027.0, 40.0),
+    ("INDUSTRY", "BodyArmorPickup", 2979.0, -2222.0, -818.0, 40.0),
+    ("INDUSTRY", "GrenadePickup", 5867.6, -1141.0, -1415.3, 40.0),
+    ("INDUSTRY", "GrenadePickup", 5907.6, -1166.0, -1417.8, 40.0),
+    ("INDUSTRY", "LauncherAmmoPickup", 5854.0, -1106.0, -1404.0, 40.0),
+    ("INDUSTRY", "ScissorsPickup", 5847.1, -1188.0, -1424.0, 40.0),
+    # Industrial catnip 2 is 36 UU from catnip 1, which stays.
+    ("INDUSTRY2", "CatnipPickup", 798.7, -9753.3, -832.0, 20.0),
+    ("INDUSTRY2", "CatnipPickup", 800.0, -9744.0, -832.0, 20.0),
+    ("INDUSTRY2", "MedKitPickup", 2726.7, -6136.3, -962.0, 40.0),
+    ("INDUSTRY2", "MedKitPickup", 2761.2, -6108.6, -962.0, 40.0),
+    ("SUBURBS-4", "CrackPickup", -1760.0, -10917.0, -5398.0, 40.0),
+    ("SUBURBS-4", "PistolPickup", -2123.5, -10168.0, -5403.8, 40.0),
+    ("SUBURBS-4", "PistolPickup", -2123.5, -10115.0, -5403.8, 40.0),
+    ("SUBURBS-4", "PistolPickup", -2121.5, -10294.0, -5403.8, 40.0),
+    ("SUBURBS-4", "ScissorsPickup", -1327.0, -9874.0, -5411.0, 40.0),
+    ("TORABORA", "CatnipPickup", 688.0, -12204.0, -2108.0, 40.0),
+    ("TORABORA", "CrackPickup", 708.0, -12252.0, -2108.0, 40.0),
+    ("TORABORA", "PlagueAmmoPickup", 728.0, -1472.0, -84.0, 40.0),
 ]
 
 

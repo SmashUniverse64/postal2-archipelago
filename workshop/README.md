@@ -16,7 +16,7 @@ From this repo root, after `make.bat` has produced a current `System\Archipelago
 python pack_release.py
 ```
 
-That fills `workshop/staging/` with the three files above. Version must match `apworld/postal2/archipelago.json` (currently **1.0.27**).
+That fills `workshop/staging/` with the three files above. Version must match `apworld/postal2/archipelago.json` (currently **1.1**).
 
 ## Upload
 
