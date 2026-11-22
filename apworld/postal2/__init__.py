@@ -368,6 +368,16 @@ def run_postal2_client(*args: str) -> None:
 try:
     from worlds.LauncherComponents import Component, Type, components
 
+    icon = "icon"
+    try:
+        from worlds.LauncherComponents import icon_paths
+
+        # Resolved by the 0.6.x launcher as a file inside this package.
+        icon_paths["postal2"] = "ap:worlds.postal2/data/icon.png"
+        icon = "postal2"
+    except Exception:
+        pass
+
     components.append(
         Component(
             "Postal 2 Client",
@@ -375,6 +385,7 @@ try:
             game_name="Postal 2",
             component_type=Type.CLIENT,
             supports_uri=True,
+            icon=icon,
         )
     )
 except Exception:

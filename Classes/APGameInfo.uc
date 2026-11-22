@@ -10,6 +10,7 @@ class APGameInfo extends GameSinglePlayer;
 
 #exec Texture Import File=Textures\APLogo.tga Name=APLogo Mips=Off ALPHA=1 DXT=5
 #exec Texture Import File=Textures\APLogoGrey.tga Name=APLogoGrey Mips=Off ALPHA=1 DXT=5
+#exec Texture Import File=Textures\APMenuLogo.tga Name=APMenuLogo Mips=Off ALPHA=1 DXT=5
 
 var config string CompanionHost;
 var config int CompanionPort;
@@ -9755,7 +9756,8 @@ defaultproperties
 {
 	GameName="Archipelago"
 	GameNameshort="Archipelago"
-	GameDescription="Archipelago randomizer for the original Monday-Friday campaign. Requires the Postal 2 Client."
+	GameDescription="Archipelago randomizer designed for the original Monday-Friday campaign. Requires Archipelago 0.6.6+ and the postal2.apworld, which includes the Postal 2 Client. Remember to have your Postal 2 Client open!"
+	MenuTitleTex="Archipelago.APMenuLogo"
 	CompanionHost="127.0.0.1"
 	CompanionPort=23981
 	APServer=""
