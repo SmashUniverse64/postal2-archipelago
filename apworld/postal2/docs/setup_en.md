@@ -2,7 +2,7 @@
 
 Unofficial Archipelago world for the original Monday–Friday campaign. Website generate cannot run this world until it is in Archipelago core: generate locally. Hosts can upload a pre-generated zip.
 
-You need **both** pieces on the same version (currently **1.1**): this `postal2.apworld`, and the in-game mutator (`Archipelago.u` + `Archipelago.int`) from Steam Workshop or the matching GitHub Release.
+You need **both** pieces on the same version (currently **1.1.0**): this `postal2.apworld`, and the in-game mutator (`Archipelago.u` + `Archipelago.int`) from Steam Workshop or the matching GitHub Release.
 
 1. Install [Archipelago 0.6.x](https://archipelago.gg).
 2. Install this `postal2.apworld` (Launcher → Install APWorld, or copy into `custom_worlds`). Restart the Launcher.
@@ -15,7 +15,7 @@ You need **both** pieces on the same version (currently **1.1**): this `postal2.
 
 Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays are not part of this world. Workshop saves are flagged cheated; achievements stay off.
 
-Moving to a new **0.x** or **1.x** line usually needs a **new seed**. Stay on current **1.1** unless you are generating.
+Moving to a new **0.x** or **1.x** line usually needs a **new seed**. Stay on current **1.1.0** unless you are generating.
 
 ## Versions
 
@@ -86,6 +86,8 @@ Starting day and a shuffled week.
 
 ### 1.1
 First public release. Generate a **new seed**. Delete `lootsanity` from an older `postal2.yaml` before you generate. Restart the Archipelago Launcher after installing the apworld, and restart Postal 2 after replacing the mutator.
+
+**Archipelago 0.6.8.** The world version is written as 1.1.0 so the Launcher can finish loading this world. Reinstall `postal2.apworld` and restart the Launcher. Same seeds.
 
 **Loot names.** Every token uses a hand-written place name in hints, spoilers, and the tracker.
 

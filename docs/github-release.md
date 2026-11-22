@@ -58,7 +58,7 @@ Full setup, Time Warp, AP tokens, and YAML options (including Piss Realism and M
 
 ## Updating
 
-Download the new `Archipelago.u` and `Archipelago.int` over the old ones in `System`, and install the matching `postal2.apworld`. Stay on **1.1** for this seed line.
+Download the new `Archipelago.u` and `Archipelago.int` over the old ones in `System`, and install the matching `postal2.apworld`. Stay on **1.1.0** for this seed line. Archipelago 0.6.8 needs the world version written as 1.1.0. Reinstall `postal2.apworld` and restart the Launcher. Same seeds.
 
 To remove the mutator, delete `Archipelago.u` and `Archipelago.int` from `System`.
 
