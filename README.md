@@ -15,9 +15,7 @@ Which loot locations become tokens is chosen **per seed**. **Max Tokens Per Map*
 
 Does that sound daunting? It might be if you aren't familiar with all of the loot locations, so there are some features in the mod designed to help with the hunting process! The YAML options **Token Glow** and **Token Heartbeat** make it easier to find remaining AP Tokens by playing audio cues and showing very obvious visual effects that can even be seen through walls. In addition, there's a new **Hint Flare** item that fires a rocket from every AP Token on the current map into the sky. Follow the sound and the resulting boom!
 
-Map-visit checks fire once per map, on that map’s hunt day. Kickable ATMs, Crackola machines, and opening ATF/food vending menus are checks too when those YAML options are on. Vending machines can stock Archipelago parcels with real item names and scouted prices.
-
-The pause map uses in-game area names. Checkmarks: cyan visited, gold AP tokens done, blue Crackola, magenta ATMs, red vending. Clearing an area’s last AP token plays one of the Dude’s map-screen errand-complete lines. In Postal 2 Client, `/tracker` lists unchecked locations currently in logic.
+Kickable ATMs, Crackola machines, and vending machines are checks too when those YAML options are on. Vending machines can also stock Archipelago items, with some configurable options. Use the new legend in the bottom-right corner of the map to track your progress!
 
 ### Time Warp
 
