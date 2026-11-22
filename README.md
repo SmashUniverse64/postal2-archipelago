@@ -1,123 +1,59 @@
 # Postal 2 Archipelago
 
-Unofficial [Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign, by **TheDogNerd**.
+[Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign, by **SmashUniverse64/TheDogNerd**.
 
-Fan project. Not affiliated with Running With Scissors or ArchipelagoMW. v1 is the original week only: Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays stay out.
+**Goal:** finish all 19 weekday errands, then walk Home through the Apocalypse to your trailer.
 
-**Current version: 1.1.** Keep the mutator and the apworld on the same version.
+When you start the game, you will load into your **Starting Day** with one random errand for that day. The seed shuffles the other four weekdays into a beatable order. Other days unlock when you receive an errand for that day.
+## New Mechanics
 
-**Goal:** finish all 19 weekday errands, then walk Home through the Apocalypse to the trailer.
+### AP Tokens
 
-On New Game you load into YAML **Starting Day** (Monday by default, or Tuesday–Friday / Random) with one random errand for that day. The seed shuffles the other four weekdays into a beatable order. Other days unlock when you receive an errand for that day. New Game holds you at Home until Postal 2 Client is connected and that first errand arrives.
+**AP tokens** are a new pickup that replaces other pickup locations at random. In-game, they appear as Archipelago logos. You'll have to look high and low across the entirety of Paradise to find them all! Progressive or otherwise useful items are colorful logos; filler and traps use a greyscale logo instead.
 
-## Time Warp
+Which loot locations become tokens is chosen **per seed**. **Max Tokens Per Map** (`max_tokens`, default 12, range 6–15) is the maximum cap of AP tokens that can spawn on each map. Each chosen pile is its own named check (`Main Street - Shotgun Stereo House Bedroom`). Leftover vanilla piles next to a token stay usable (medkits, ammo, guns).
 
-Clock-out is gone. You always have **Time Warp**.
-
-Open it for a day menu of **unlocked** errands. Keys **1–5** pick a weekday, then a destination: **Home** plus unlockable warp points (Greenbelt, Main Street, Office Complex, Ghetto, and Tora Bora any day; Trainyard from Tuesday; Napalm Factory Exterior and East Suburbs from Thursday). Throw Time Warp on the ground. When the light shaft appears, pick it up to warp. Leave it for ten seconds and the warp cancels.
-
-Keys **6–0** return to Library, Burning Library, Brewery, Napalm Factory, and Parcel Center after you have left those maps once (same throw-and-pick-up). Parcel Center’s key **0** is Friday; the building locks down after the first visit.
-
-Each hunt map is assigned one weekday. AP tokens and the map-visit check spawn only if you enter that map on that day, so Time Warp back if you miss it. Completing the last of the 19 errands starts the Apocalypse and **breaks Time Warp**. Walk Home to the trailer to send the goal, even if you finished on Monday–Thursday.
-
-## AP tokens
-
-World pickups that are Archipelago locations appear as an **AP token** (the Archipelago logo). Useful items keep the color logo. Filler and traps use a greyscale logo.
-
-Which piles become tokens is chosen **per seed** from a catalog of real loot in the maps. **Max Tokens Per Map** (`max_tokens`, default 12, range 6–15) is the cap; each hunt map rolls 6 through that number. Each chosen pile is its own named check (`Main Street - Shotgun Stereo House Bedroom`). Leftover vanilla piles next to a token stay usable (heal, ammo, guns); only the logo is the check. Piles past load zones or inside unbreakable boxes are never tokens. A few piles behind weekday gates are only rolled when that map's hunt day can reach them.
-
-**Token Glow** and **Token Heartbeat** mark remaining checks (heartbeat gets faster and louder as you near a token). **Hint Flare** (junk; also $30 on ATF/fast-food machines) fires a harmless noclip rocket from every AP token on the current map so you can see and hear them.
+Does that sound daunting? It might be if you aren't familiar with all of the loot locations, so there are some features in the mod designed to help with the hunting process! The YAML options **Token Glow** and **Token Heartbeat** make it easier to find remaining AP Tokens by playing audio cues and showing very obvious visual effects that can even be seen through walls. In addition, there's a new **Hint Flare** item that fires a rocket from every AP Token on the current map into the sky. Follow the sound and the resulting boom!
 
 Map-visit checks fire once per map, on that map’s hunt day. Kickable ATMs, Crackola machines, and opening ATF/food vending menus are checks too when those YAML options are on. Vending machines can stock Archipelago parcels with real item names and scouted prices.
 
 The pause map uses in-game area names. Checkmarks: cyan visited, gold AP tokens done, blue Crackola, magenta ATMs, red vending. Clearing an area’s last AP token plays one of the Dude’s map-screen errand-complete lines. In Postal 2 Client, `/tracker` lists unchecked locations currently in logic.
 
+### Time Warp
+
+You no longer automatically end the day when all of your errands are complete for the day. So, how do you get to the other days? 
+
+You have been given a new **Time Warp** item which is in your Other slot (where your Map is).
+
+Select and use Time Warp to see a brand new warp menu. You can see a list of all of your **unlocked** days and the errands available for each. Keys **1–5** let you pick a weekday, then a destination. **Home** is always available as a warp point, but additional unlockable warp points take you to other maps for more convenient travel later in your run. Throw the Time Warp on the ground with the X key, and then when the giant light shaft appears, pick it back up to warp to your specified day and location.
+
+**But how are the one-off story maps handled?**
+
+Keys **6–0** return to Library, Burning Library, Brewery, Napalm Factory, and Parcel Center after you have left those maps one time. This is in case you miss any AP tokens during your first visit!
+
+Every weekday you unlock, you gain access to 'Hunt Maps,' maps seeded with AP Tokens. View your currently unlocked Hunt Maps using your map. Visiting these hunt maps on their chosen day counts as a check. Keep in mind that you can only see AP Tokens (and collect the visit check) on each map on its chosen day, so make sure you warp to the correct day to grab them all!
+
 ## YAML options
 
-Edit `postal2.yaml` before you generate. **Melee Durability** and **Piss Realism** are off unless you turn them on. A new seed is required to change them.
+### Weapon Unlocks
 
-### Melee Durability (`melee_durability`)
+**Shuffle Weapons** (YAML option, on by default). You've forgotten how to use all of the weapons in the game and must unlock them as items in the item pool. If you turn this off, it works like the vanilla game, and you can add any weapon you find to your inventory. **Random Weapon**, another YAML option, is on by default alongside this and grants you a random weapon out of the pool that you can use right from the start. You can turn this off if you want to just have access to your hands (flipping people off) and piss.
 
-Melee weapons wear down on connecting hits. The weapon wheel draws a durability bar on those icons. Activate a **Weapon Repair Kit** from inventory to restore the melee you are holding to full. Picking up a second copy of a melee you already own restores 30 durability. Spare Ammo can also restore 30 on a damaged melee. The Taser does not wear. ATF and fast-food machines sell kits for $50. Repair Kits are junk (grey AP tokens).
+### Melee Durability (Off by Default)
 
-### Piss Realism (`piss_realism`)
+Your arsenal of extremely OP melee weapons will now wear down with each hit. Each successful hit with a melee weapon removes a random amount of durability from that weapon. If durability hits zero, you can no longer swing that melee weapon. Don't despair, though; you can use newly added Weapon Repair Kits to instantly repair your currently equipped melee weapon to max! When this option is on, weapon repair kits are guaranteed to drop for you in the loot pool, but if you really need to stock up, they've also been added to the various vending machines around Paradise. You can also partially repair your melee weapons by finding an instance of that weapon on the ground.
 
-The bladder starts at 1 out of 20. **Piss Regen Seconds** (`piss_regen`, default 120, range 30–180) is seconds per pip. Near 18/20 the Dude uses the Friday clinic “have to pee” lines. At 20/20 he takes 1 damage per second until he goes (cannot kill). Once he starts peeing he cannot zip up until the meter is under 10. Water bottles are $5 at every vending machine and add 5; Crackola also adds 5. Water Bottles are junk in the item pool when this option is on. The Friday clinic errand is always available.
+### Piss Realism (Off by Default)
 
-### Other knobs
+Piss regenerates really, really slowly, with a configurable value in the options (30 seconds per 1 piss all the way up to 180 seconds per 1 piss). When your piss reaches the max of 20, you start taking damage and must piss to ease your bladder! So, you have to regulate how much piss you have access to, but also don't let it overflow. If you need emergency piss for whatever reason (especially with high values), you can buy water bottles at vending machines to instantly restore 5 piss.
 
-Starting Day, Shuffle Weapons, Random Weapon, Max Tokens Per Map, Token Glow, Token Heartbeat, Vending / Crackola / ATM sanity, traps, Death Link. With Shuffle Weapons on you start unarmed; Dusters, Bali, Krotchy Grenade, Box Launcher, and Cat Launcher sit in the unlock pools with the other weapons.
+### Other Major Features
 
-Full setup, options, and version history: [`apworld/postal2/docs/setup_en.md`](apworld/postal2/docs/setup_en.md). Game tab: [`apworld/postal2/docs/en_Postal 2.md`](apworld/postal2/docs/en_Postal 2.md).
+- **Starting Day** (YAML option, defaults to Monday). Choose which day you start on or go all random. The order of your week is different every run.
+- **Traps** (YAML option, on by default). A few silly and a few evil traps for you to discover...
+- **Death Link!**
+- **Token Glow and Token Heartbeat** (YAML option, on by default). By default, AP tokens both emit a glow that you can see from the outside of buildings and create a heartbeat sound to help you track them down more easily. But if you want to make it a super difficult challenge for yourself, you can disable both of these! Some of these pickups are really tricky to find without it, so it's a real test of your game knowledge!
 
-## Two pieces
+### Install Guide
 
-You need both:
-
-| Piece | Where it ships | What it is |
-| --- | --- | --- |
-| `postal2.apworld` + `postal2.yaml` + **Postal 2 Client** | GitHub Releases | World logic, YAML, and the Archipelago client |
-| `Archipelago.u` + `Archipelago.int` | Steam Workshop (or the same GitHub Release) | In-game mutator |
-
-The mutator talks to **Postal 2 Client** on `127.0.0.1:23981`. Subscribing on Workshop waits until that client is running and connected to your Archipelago room.
-
-Website generate cannot run this world until it is in Archipelago core. Generate locally. Hosts can upload a pre-generated zip.
-
-## Play
-
-1. Install [Archipelago 0.6.x](https://archipelago.gg).
-2. Install `postal2.apworld` from [Releases](../../releases) (Launcher → **Install APWorld**, or copy into `custom_worlds`). Restart the Launcher.
-3. Subscribe to the Steam Workshop mutator, **or** install `Archipelago.u` and `Archipelago.int` from [Releases](../../releases) with no Workshop (copy both into Postal 2's `System` folder). Pick one mutator source. Manual steps: [`docs/github-release.md`](docs/github-release.md).
-4. Copy `postal2.yaml` into Archipelago's `Players` folder. Set `name:` to your slot.
-5. Generate locally, then host or join the room.
-6. Launcher → **Postal 2 Client**. Connect with host:port, slot name, and password if any. Keep that window open.
-7. Start **POSTAL 2**. New Game → Workshop → **Archipelago**. Use a **new save**.
-
-## Requirements
-
-- POSTAL 2 on Steam (Complete). Windows.
-- Archipelago 0.6.x (developed against 0.6.7).
-- A new save. Workshop saves are flagged cheated; achievements stay off.
-
-## Steam Workshop
-
-Workshop title: **Postal 2 Archipelago Randomizer**.
-
-Upload **only** the compiled mutator: `Archipelago.u`, `Archipelago.int`, and a preview image. Do not upload UnrealScript, textures, sounds, maps, or stock game packages.
-
-Steps live in [`workshop/README.md`](workshop/README.md). Paste [`workshop/description.txt`](workshop/description.txt) into the Workshop dialog. Start the item **private**, test on retail Postal 2, then set it public. Do not mark Paradise Lost as required DLC.
-
-## Developers
-
-This folder is the git root. Do not put the POSTAL 2 SDK or Steam game tree in git.
-
-- Mutator source: `Classes/`, `Textures/`, `Sounds/`, `Archipelago.int`, `make.bat`
-- World source: `apworld/postal2/`
-- Pack the apworld (also copies into `C:\ProgramData\Archipelago\custom_worlds` when that folder exists):
-
-```text
-cd apworld
-python pack_apworld.py
-```
-
-- Compile the mutator from POSTed (deletes `System\Archipelago.u`, runs `UCC make`, copies `Archipelago.int` into `System`):
-
-```text
-make.bat
-```
-
-- Stage GitHub Release files plus a Workshop copy:
-
-```text
-python pack_release.py
-```
-
-Output is `dist/1.1/` (`postal2.apworld`, `postal2.yaml`, `Archipelago.u`, `Archipelago.int`) and `workshop/staging/`.
-
-`scan_pickups.py` is a catalog scanner for the SDK `Maps` folder. Do not full-regen `catalog.py` unless you know how location IDs are assigned; inserting mid-list shifts later IDs.
-
-Game name in Archipelago: `Postal 2`. BASE_ID `232000`.
-
-## License
-
-MIT for this project's code and docs. See [LICENSE](LICENSE). You still need a legitimate copy of POSTAL 2.
+The install guide for the Postal 2 Mutator and the APworld is contained on the current Release page.
