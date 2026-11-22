@@ -1,3 +1,5 @@
+<p align="center"><img src="https://github.com/SmashUniverse64/postal2-archipelago/blob/main/docs/postal2-ap-logo.png" width="200" alt="description" display="block"></p>
+
 # Postal 2 Archipelago
 
 [Archipelago](https://archipelago.gg) randomizer for the original Monday–Friday **POSTAL 2** campaign, by **SmashUniverse64/TheDogNerd**.
@@ -54,4 +56,4 @@ Piss regenerates really, really slowly, with a configurable value in the options
 
 ### Install Guide
 
-The install guide for the Postal 2 Mutator and the APworld is contained on the current Release page.
+The install guide for the Postal 2 Mutator and the APworld is contained on the current [Release page](https://github.com/SmashUniverse64/postal2-archipelago/releases).
