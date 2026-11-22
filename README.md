@@ -7,6 +7,10 @@
 **Goal:** finish all 19 weekday errands, then walk Home through the Apocalypse to your trailer.
 
 When you start the game, you will load into your **Starting Day** with one random errand for that day. The seed shuffles the other four weekdays into a beatable order. Other days unlock when you receive an errand for that day.
+
+## Install Guide
+
+The install guide for the Postal 2 Mutator and the APworld is contained on the current [Release page](https://github.com/SmashUniverse64/postal2-archipelago/releases).
 ## New Mechanics
 
 ### AP Tokens
@@ -53,7 +57,3 @@ Piss regenerates really, really slowly, with a configurable value in the options
 - **Traps** (YAML option, on by default). A few silly and a few evil traps for you to discover...
 - **Death Link support**
 - **Token Glow and Token Heartbeat** (YAML option, on by default). By default, AP tokens both emit a glow you can see from outside buildings and create a heartbeat sound to help you track them down more easily. But if you want to make it a super difficult challenge for yourself, you can disable both! Some of these pickups are really tricky to find without it, so it's a real test of your game knowledge!
-
-### Install Guide
-
-The install guide for the Postal 2 Mutator and the APworld is contained on the current [Release page](https://github.com/SmashUniverse64/postal2-archipelago/releases).
