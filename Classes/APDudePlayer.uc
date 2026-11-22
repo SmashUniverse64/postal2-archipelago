@@ -6,16 +6,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 class APDudePlayer extends AWDudePlayer;
 
-var bool bTokenShot;
-
 function Possess(Pawn aPawn)
 {
 	Super.Possess(aPawn);
-	ConsoleCommand("set input NumPad3 APDumpTokens");
-	ConsoleCommand("set input NumPad2 APBoomTokens");
-	ConsoleCommand("set input NumPad1 APResyncItems");
-	ConsoleCommand("set input NumPad4 APLocPrint");
-	ConsoleCommand("set input NumPad5 APTokenShot");
+	// 1.1 bound these to debug commands. Default is unbound.
+	ConsoleCommand("SET Input NumPad1");
+	ConsoleCommand("SET Input NumPad2");
+	ConsoleCommand("SET Input NumPad3");
+	ConsoleCommand("SET Input NumPad4");
+	ConsoleCommand("SET Input NumPad5");
 }
 
 function AddWeaponSelector()
@@ -136,57 +135,6 @@ event TravelPostAccept()
 	}
 	if (APWeaponSelector(WeaponSelector) != None)
 		APWeaponSelector(WeaponSelector).SafeRefreshSelector();
-}
-
-exec function APResyncItems()
-{
-	local APGameInfo G;
-
-	G = APGameInfo(Level.Game);
-	if (G != None)
-		G.ResyncAPItems();
-}
-
-exec function APDumpTokens()
-{
-	local APGameInfo G;
-
-	G = APGameInfo(Level.Game);
-	if (G != None)
-		G.DumpActiveTokens();
-}
-
-exec function APBoomTokens()
-{
-	local APGameInfo G;
-
-	G = APGameInfo(Level.Game);
-	if (G != None)
-		G.BoomActiveTokens();
-}
-
-exec function APLocPrint()
-{
-	local APGameInfo G;
-
-	G = APGameInfo(Level.Game);
-	if (G != None)
-		G.APLocPrint();
-}
-
-exec function APTokenShot()
-{
-	local APGameInfo G;
-
-	bTokenShot = !bTokenShot;
-	G = APGameInfo(Level.Game);
-	if (G != None)
-	{
-		if (bTokenShot)
-			G.ShowAPMessage("Token screenshot ON — pickups save {ID}.bmp in System");
-		else
-			G.ShowAPMessage("Token screenshot OFF");
-	}
 }
 
 function bool PissLocked()

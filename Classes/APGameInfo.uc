@@ -55,7 +55,6 @@ var bool bVendorDirty;
 var bool bNeedStripCollected;
 var bool bCheckedSyncReady;
 var bool bRecBlobsRepaired;
-var bool bLocPrint;
 var byte ClinicNeedCached;
 var float LastCatchUpTime;
 var string VHintU[32];
@@ -378,7 +377,7 @@ function bool CheckForErrandCompletion(
 {
 	local bool bCompleted;
 	local int i, DayIndex, ErrandIndex;
-	local string UniqueName, DoneStr;
+	local string UniqueName;
 
 	if (Other != None && Other.Tag == 'VoteScreen' && !IsUnlocked("ERRAND:Vote"))
 		return false;
@@ -386,13 +385,6 @@ function bool CheckForErrandCompletion(
 	bCompleted = Super.CheckForErrandCompletion(Other, Another, ActionPawn, ThisPlayer, bPremature, SendToURL);
 	if (!bCompleted)
 		bCompleted = TryCompleteOffDayErrand(Other, Another, ActionPawn, bPremature);
-
-	if (bCompleted)
-		DoneStr = "1";
-	else
-		DoneStr = "0";
-	if (Other != None)
-		SendDebug("errand other="$string(Other.Class)$" tag="$string(Other.Tag)$" done="$DoneStr);
 
 	if (Other != None && (Other.IsA('MilkInv') || Other.IsA('MilkPickup') || Other.Tag == 'MilkPickup')
 		&& IsUnlocked("ERRAND:GetMilk"))
@@ -588,7 +580,6 @@ function bool PickupQuery(Pawn Other, Pickup Item)
 		if (bAPToken)
 		{
 			U = UniqueForPickup(Item);
-			MaybeTokenShot(U);
 			if (U != "")
 				SendCheck(U);
 			ConsumeAPToken(Item);
@@ -1173,8 +1164,6 @@ function SendCheck(string UniqueName)
 		NextMachineGlowUpdate = 0;
 	if (UniqueName ~= "GetNapalm")
 		ApplyWarpLockGimp();
-	if (bLocPrint)
-		ShowAPMessage(PrettyLocName(UniqueName));
 }
 
 function ApplyAPSeed(string Seed, bool bReset)
@@ -1269,13 +1258,6 @@ function SendGoal()
 		Bridge.SendGoal();
 }
 
-function SendDebug(string Text)
-{
-	EnsureBridge();
-	if (Bridge != None)
-		Bridge.SendLine("DEBUG "$Text);
-}
-
 function SendGranted(string ClassName)
 {
 	EnsureBridge();
@@ -1318,135 +1300,7 @@ exec function APHelp()
 {
 	ShowAPMessage("apconnect host:port slot [password]");
 	ShowAPMessage("apstatus  |  apdisconnect");
-	ShowAPMessage("apdumptokens (NumPad3): list uncollected AP tokens here");
-	ShowAPMessage("apboomtokens (NumPad2): explode at each uncollected token");
-	ShowAPMessage("apresyncitems (NumPad1): reapply items already unlocked in AP");
-	ShowAPMessage("aplocprint (NumPad4): print location names when you collect items");
-	ShowAPMessage("aptokenshot (NumPad5): screenshot each world AP token as {ID}.bmp");
 	ShowAPMessage("Bridge stays local. The game cannot speak WebSocket/WSS itself.");
-}
-
-exec function APLocPrint()
-{
-	bLocPrint = !bLocPrint;
-	if (bLocPrint)
-		ShowAPMessage("Location print ON");
-	else
-		ShowAPMessage("Location print OFF");
-}
-
-exec function APTokenShot()
-{
-	local APDudePlayer D;
-
-	D = APDudePlayer(GetPlayer());
-	if (D != None)
-		D.APTokenShot();
-}
-
-function string PadDigits(int N, int Width)
-{
-	local string S;
-
-	S = string(N);
-	while (Len(S) < Width)
-		S = "0"$S;
-	return S;
-}
-
-function string SafeShotName(string U)
-{
-	local string S, Ch;
-	local int i, A;
-
-	if (U == "")
-		return "token";
-	S = "";
-	for (i = 0; i < Len(U); i++)
-	{
-		Ch = Mid(U, i, 1);
-		A = Asc(Ch);
-		if ((A >= 48 && A <= 57) || (A >= 65 && A <= 90) || (A >= 97 && A <= 122)
-			|| A == 45 || A == 95)
-			S = S$Ch;
-		else
-			S = S$"_";
-	}
-	if (S == "")
-		return "token";
-	return S;
-}
-
-function MaybeTokenShot(string U)
-{
-	local P2Player P;
-	local APDudePlayer D;
-	local string ShotFile, Dest, Data, Empty;
-	local int i, SrcSize, DstSize;
-
-	if (U == "")
-		return;
-	P = GetPlayer();
-	D = APDudePlayer(P);
-	if (D == None || !D.bTokenShot)
-		return;
-
-	for (i = 0; i < 10000; i++)
-	{
-		ShotFile = "Shot"$PadDigits(i, 5)$".bmp";
-		if (FileSize(ShotFile) < 0)
-			break;
-	}
-	if (i >= 10000)
-	{
-		ShowAPMessage("Token shot: no free Shot#####.bmp slot");
-		return;
-	}
-
-	P.ConsoleCommand("shot");
-	if (FileSize(ShotFile) < 0)
-	{
-		ShowAPMessage("Token shot failed (engine did not write "$ShotFile$")");
-		return;
-	}
-
-	Dest = SafeShotName(U)$".bmp";
-	if (Dest ~= ShotFile)
-		Dest = SafeShotName(U)$"_"$PadDigits(i, 5)$".bmp";
-	if (FileSize(Dest) >= 0)
-		Dest = SafeShotName(U)$"_"$PadDigits(i, 5)$".bmp";
-
-	Data = "";
-	if (!LoadFileToString(Data, ShotFile) || Data == "")
-	{
-		ShowAPMessage("Token shot as "$ShotFile$" — rename to "$Dest);
-		return;
-	}
-	if (!SaveStringToFile(Data, Dest))
-	{
-		ShowAPMessage("Token shot as "$ShotFile$" — could not write "$Dest);
-		return;
-	}
-	SrcSize = FileSize(ShotFile);
-	DstSize = FileSize(Dest);
-	if (DstSize < 0 || (SrcSize >= 0 && DstSize != SrcSize))
-	{
-		ShowAPMessage("Token shot as "$ShotFile$" — copy truncated, rename to "$Dest);
-		return;
-	}
-	Empty = "";
-	SaveStringToFile(Empty, ShotFile);
-	ShowAPMessage("Token shot "$Dest);
-}
-
-exec function APDumpTokens()
-{
-	DumpActiveTokens();
-}
-
-exec function APResyncItems()
-{
-	ResyncAPItems();
 }
 
 function bool IsListedWorldToken(Pickup Item, out string U)
@@ -1459,74 +1313,6 @@ function bool IsListedWorldToken(Pickup Item, out string U)
 	if (!IsAPToken(Item) && NamedUniqueForPickup(Item) == "" && Left(U, 3) != "SC_")
 		return false;
 	return true;
-}
-
-function DumpActiveTokens()
-{
-	local Pickup Item;
-	local string U, Kind;
-	local int N, Iter;
-	local vector L;
-
-	ShowAPMessage("AP tokens on "$MapKey()$":");
-	foreach AllActors(class'Pickup', Item)
-	{
-		Iter++;
-		if (Iter > 800)
-			break;
-		if (!IsListedWorldToken(Item, U))
-			continue;
-		if (IsAPToken(Item))
-			Kind = "token";
-		else
-			Kind = "unconverted";
-		L = Item.Location;
-		N++;
-		ShowAPMessage(string(N)$". "$U$" ["$Kind$"] @ "$string(int(L.X))$","$string(int(L.Y))$","$string(int(L.Z)));
-	}
-	if (N == 0)
-		ShowAPMessage("none uncollected");
-	else
-		ShowAPMessage(string(N)$" uncollected on this map");
-}
-
-exec function APBoomTokens()
-{
-	BoomActiveTokens();
-}
-
-function BoomActiveTokens()
-{
-	local Pickup Item;
-	local vector Spots[64];
-	local string Names[64];
-	local int N, i, Iter;
-	local string U;
-	local GrenadeExplosion Exp;
-
-	foreach AllActors(class'Pickup', Item)
-	{
-		Iter++;
-		if (Iter > 800)
-			break;
-		if (!IsListedWorldToken(Item, U))
-			continue;
-		if (N >= 64)
-			break;
-		Spots[N] = Item.Location + vect(0,0,40);
-		Names[N] = U;
-		N++;
-	}
-	if (N == 0)
-	{
-		ShowAPMessage("no tokens to boom");
-		return;
-	}
-	for (i = 0; i < N; i++)
-	{
-		Exp = Spawn(class'GrenadeExplosion',,, Spots[i]);
-		ShowAPMessage("boom "$string(i + 1)$". "$Names[i]);
-	}
 }
 
 function bool FireHintFlares(P2Pawn Dude)
@@ -5445,25 +5231,6 @@ function ReapplyUnlocks(P2Pawn Dude)
 		if (given >= 80)
 			break;
 	}
-}
-
-function ResyncAPItems()
-{
-	local P2Player P;
-	local P2Pawn Dude;
-
-	P = GetPlayer();
-	if (P != None)
-		Dude = P2Pawn(P.Pawn);
-	if (Dude != None)
-		ReapplyUnlocks(Dude);
-	ApplyGatedErrands(true);
-	ApplyAreaLocks();
-	RestoreErrandPickupsOnMap();
-	EnsureBridge();
-	if (Bridge != None)
-		Bridge.SendLine("RESYNC");
-	ShowAPMessage("Resyncing AP items from the client...");
 }
 
 function bool ShuffleWeaponsOn()
