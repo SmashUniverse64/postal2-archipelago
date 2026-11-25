@@ -1,7 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Light on AP-token pickups and on ATM / Crackola / vending machines that
-// still have checks. Progression/useful tokens and machines rainbow-cycle
-// hue. Filler/trap tokens pulse grey instead.
+// still have checks. Progression/useful checks rainbow-cycle hue.
+// Filler/trap checks pulse grey. A machine pulses grey only when every
+// check still on it is filler or a trap. Token Glow off turns the light off.
 //
 // Ghetto (SUBURBS-2) is a huge open BSP. Twelve dynamic lights at once overflow
 // D3D in FBspProjectorDrawList. Other maps keep every glow as a world light.
@@ -236,7 +237,7 @@ function Tick(float DeltaTime)
 		ApplyLightMode();
 	}
 
-	if (bGrey && !bMachine)
+	if (bGrey)
 	{
 		PulseT += DeltaTime * 2.0;
 		if (PulseT > 2.0)

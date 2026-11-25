@@ -60,6 +60,8 @@ class HintNameTests(unittest.TestCase):
             "SC_GREENBELT1_ShotGunPickup_03": "Greenbelt - Shotgun Bank Interior between Soda Fridges",
             "SC_ESTATES_MachinegunAmmoPickup_02": "Estates - Machine Gun Ammo Cop House Bedroom Footlocker",
             "SC_LIBRARY2_SledgePickup_01": "Burning Library - Sledgehammer Dog Pit",
+            "COLA_EASTMALL_01": "East Mall - Crackola Machines on the Lower Level",
+            "COLA_EASTMALL_02": "East Mall - Crackola Machines near Glock Table",
         }
         for unique, name in expected.items():
             with self.subTest(unique=unique):
@@ -104,6 +106,36 @@ class HintNameTests(unittest.TestCase):
                 day = 1 if unique.startswith("SC_WESTMALL_") else 4
                 if day in closed:
                     self.assertNotIn(unique, rolled)
+
+    def test_machine_filler_counts_as_grey(self):
+        tokens = {"SC_HOME_Medkit_01"}
+        for unique in (
+            "ATM_EASTMALL_2",
+            "COLA_EASTMALL_02",
+            "VUSE_EASTMALL_01",
+            "VBUY_EASTMALL_03",
+        ):
+            self.assertTrue(data.is_machine_check(unique))
+            self.assertTrue(data.counts_as_grey_check(unique, tokens))
+        self.assertFalse(data.is_machine_check("SC_HOME_Medkit_01"))
+        self.assertFalse(data.is_machine_check(""))
+        self.assertTrue(data.counts_as_grey_check("SC_HOME_Medkit_01", tokens))
+        self.assertFalse(data.counts_as_grey_check("SC_OTHER", tokens))
+        self.assertTrue(data.counts_as_grey_check("SC_OTHER", None))
+        self.assertTrue(data.counts_as_grey_check("SC_OTHER", set()))
+        self.assertFalse(data.counts_as_grey_check("", tokens))
+
+    def test_trap_selection_keeps_old_switch(self):
+        all_traps = set(data.TRAP_NAMES)
+        self.assertEqual(data.coerce_trap_selection(True), all_traps)
+        self.assertEqual(data.coerce_trap_selection("yes"), all_traps)
+        self.assertEqual(data.coerce_trap_selection(False), set())
+        self.assertEqual(data.coerce_trap_selection("off"), set())
+        self.assertEqual(
+            data.coerce_trap_selection(["Piss Trap", "Gimp Trap"]),
+            {"Piss Trap", "Gimp Trap"},
+        )
+        self.assertEqual(len(all_traps), 7)
 
 
 if __name__ == "__main__":

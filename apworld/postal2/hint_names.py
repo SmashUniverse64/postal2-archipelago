@@ -2064,6 +2064,8 @@ HINT_LABELS = [
     ("EASTMALL", "Gas Can 1", "Gas Can ATF-R-Us Backroom Shelves behind Lock"),
     ("EASTMALL", "Gas Can 2", "More Gas Can ATF-R-Us Backroom Shelves behind Lock"),
     ("EASTMALL", "Gas Can 3", "The Last Gas Can ATF-R-Us Backroom Shelves behind Lock"),
+    ("EASTMALL", "Crackola Machine 01", "Crackola Machines on the Lower Level"),
+    ("EASTMALL", "Crackola Machine 02", "Crackola Machines near Glock Table"),
     ("EASTMALL", "Glock 1", "Glock Table near Crackola Machines"),
     ("EASTMALL", "Glock 2", "Glock Bookstore Shelf"),
     ("EASTMALL", "Glock Ammo 1", "Glock Ammo Vacant Store Floor"),

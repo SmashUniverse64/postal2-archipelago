@@ -28,6 +28,7 @@ var float RefuseCooldown;
 var float LastWeaponRefuseTime;
 var string LastWeaponRefuseName;
 var float LastGateNudgeTime;
+var float NextNapalmGimpRelease;
 var bool bAnnouncedMapPickups;
 var bool bRemindedMapPickups;
 var bool bAnnouncedAllFound;
@@ -1753,7 +1754,15 @@ function ApplyWarpLockGimp()
 	{
 		if (IsGimpTrapLocked())
 			DropGimpTrapLock();
+		if (GS != None)
+			GS.bNapalmErrandGimp = false;
 		EnforceKeepGimp(Dude);
+		return;
+	}
+	// Napalm errand suit comes off once the factory interior is no longer loaded.
+	if (GS != None && GS.bNapalmErrandGimp && !(K ~= "NAPALM"))
+	{
+		ReleaseNapalmErrandGimp();
 		return;
 	}
 	if (IsGimpTrapLocked())
@@ -1767,7 +1776,33 @@ function ApplyWarpLockGimp()
 	else if (K ~= "BREWERY" && (GS == None || !GS.bWarpBrewery))
 		PutOnKeepGimp();
 	else if (K ~= "NAPALM" && HasRecordedCheck("GetNapalm") && (GS == None || !GS.bWarpNapalm))
+	{
+		if (GS != None)
+			GS.bNapalmErrandGimp = true;
 		StartGimpTrap();
+	}
+}
+
+function ReleaseNapalmErrandGimp()
+{
+	local APGameState GS;
+
+	GS = APState();
+	if (GS == None || !GS.bNapalmErrandGimp)
+		return;
+	if (MapKey() ~= "NAPALM")
+		return;
+	if (Level.TimeSeconds < NextNapalmGimpRelease)
+		return;
+	NextNapalmGimpRelease = Level.TimeSeconds + 0.5;
+	if (ShouldKeepGimp())
+	{
+		GS.bNapalmErrandGimp = false;
+		return;
+	}
+	ClearGimpTrap(None, true);
+	if (!IsGimpTrapLocked() && !WearingGimp())
+		GS.bNapalmErrandGimp = false;
 }
 
 function TickKeepGimp()
@@ -1932,13 +1967,14 @@ function StartGimpTrap()
 	ShowAPMessage("Gimp suit's stuck until you leave this map!");
 }
 
-function ClearGimpTrap(optional P2Pawn PassedDude)
+function ClearGimpTrap(optional P2Pawn PassedDude, optional bool bForceClothes)
 {
 	local DudePlayer DP;
 	local P2Pawn Dude;
 	local APGameState GS;
 	local class<Inventory> Want;
 	local bool HadCop;
+	local bool bLocked;
 
 	GS = APState();
 	if (ShouldKeepGimp())
@@ -1946,36 +1982,40 @@ function ClearGimpTrap(optional P2Pawn PassedDude)
 		DropGimpTrapLock();
 		return;
 	}
-	if (!IsGimpTrapLocked())
-	{
-		RestoreGimpTrapCopClothes(PassedDude);
-		return;
-	}
-	Want = GimpTrapWantedClothes();
-	HadCop = GimpTrapRememberedCop();
-
 	DP = DudePlayer(GetPlayer());
 	Dude = PassedDude;
 	if (Dude == None && DP != None)
 		Dude = P2Pawn(DP.Pawn);
 	if (DP == None && Dude != None)
 		DP = DudePlayer(Dude.Controller);
+	bLocked = IsGimpTrapLocked();
+	if (!bLocked && !(bForceClothes && WearingGimp()))
+	{
+		RestoreGimpTrapCopClothes(PassedDude);
+		return;
+	}
 	if (DP == None)
 		return;
-
-	bGimpTrap = false;
-	GimpTrapPrevClothes = None;
-	if (GS != None)
+	if (bLocked)
 	{
-		GS.bGimpTrap = false;
-		GS.GimpTrapPrevClothes = None;
+		Want = GimpTrapWantedClothes();
+		HadCop = GimpTrapRememberedCop();
+		bGimpTrap = false;
+		GimpTrapPrevClothes = None;
+		if (GS != None)
+		{
+			GS.bGimpTrap = false;
+			GS.GimpTrapPrevClothes = None;
+		}
 	}
+	else
+		Want = class'DudeClothesInv';
 
 	if (DP.CurrentClothes != Want)
-	{
 		DP.CheckForChangeClothes(Want);
-		DP.ChangeToNewClothes();
-	}
+	else
+		DP.NewClothes = Want;
+	DP.ChangeToNewClothes();
 	DP.CurrentClothes = Want;
 	if (TheGameState != None)
 		TheGameState.CurrentClothes = Want;
@@ -2305,6 +2345,7 @@ event Tick(float DeltaTime)
 {
 	Super.Tick(DeltaTime);
 	KickBridge();
+	ReleaseNapalmErrandGimp();
 	TickPissTrap();
 	TickPissRealism();
 	TickMapTokCounts();
@@ -8066,6 +8107,7 @@ function RefreshTokenLooks(optional bool bKeepGlowTimer)
 {
 	local APWorldPickup Token;
 	local Pickup Item;
+	local APCheckGlow Glow;
 	local int N;
 
 	ForceAPLogoFlags();
@@ -8094,6 +8136,12 @@ function RefreshTokenLooks(optional bool bKeepGlowTimer)
 	}
 	if (!bKeepGlowTimer)
 		NextGlowUpdate = 0;
+	foreach DynamicActors(class'APCheckGlow', Glow)
+	{
+		if (Glow == None || Glow.Target == None || Pickup(Glow.Target) != None)
+			continue;
+		StyleActorGlow(Glow, Glow.Target);
+	}
 }
 
 function APTokenSprite ReuseOrSpawnTokenSprite(Pickup Item)
@@ -8310,6 +8358,69 @@ function EnsureCheckGlow(Pickup Item)
 	}
 }
 
+function bool SingleCheckGrey(string U)
+{
+	return U != "" && !HasRecordedCheck(U) && IsGreyToken(U);
+}
+
+function bool VendorChecksAreGrey(P2EVendingMachineTrigger V)
+{
+	local string U;
+	local int S, j, Slot;
+	local bool Any;
+
+	if (V == None || VendorCap(MapKey()) <= 0)
+		return false;
+	S = NamedActorSlot(V, class'P2EVendingMachineTrigger', VendorCap(MapKey()));
+	if (S <= 0)
+		return false;
+	U = "VUSE_"$MapKey()$"_"$TwoDigit(S);
+	if (!HasRecordedCheck(U))
+	{
+		Any = true;
+		if (!IsGreyToken(U))
+			return false;
+	}
+	for (j = 1; j <= VendorBuySlots(); j++)
+	{
+		Slot = (S - 1) * VendorBuyStride() + j;
+		U = "VBUY_"$MapKey()$"_"$TwoDigit(Slot);
+		if (HasRecordedCheck(U))
+			continue;
+		Any = true;
+		if (!IsGreyToken(U))
+			return false;
+	}
+	return Any;
+}
+
+function bool MachineChecksAreGrey(Actor A)
+{
+	local CrackolaTrigger Cola;
+	local ATMTrigger ATM;
+	local P2EVendingMachineTrigger V;
+
+	if (A == None)
+		return false;
+	Cola = CrackolaTrigger(A);
+	if (Cola != None)
+		return SingleCheckGrey(ColaUnique(Cola));
+	ATM = ATMTrigger(A);
+	if (ATM != None && CrackolaTrigger(A) == None)
+		return SingleCheckGrey(ATMUnique(ATM));
+	V = P2EVendingMachineTrigger(A);
+	if (V != None)
+		return VendorChecksAreGrey(V);
+	return false;
+}
+
+function StyleActorGlow(APCheckGlow Glow, Actor A)
+{
+	if (Glow == None)
+		return;
+	Glow.SetGreyMode(MachineChecksAreGrey(A));
+}
+
 function EnsureActorGlow(Actor A)
 {
 	local APCheckGlow Glow;
@@ -8321,11 +8432,17 @@ function EnsureActorGlow(Actor A)
 	foreach DynamicActors(class'APCheckGlow', Glow)
 	{
 		if (Glow.Target == A)
+		{
+			StyleActorGlow(Glow, A);
 			return;
+		}
 	}
 	Glow = Spawn(class'APCheckGlow', A,, A.Location);
 	if (Glow != None)
+	{
 		Glow.AttachToActor(A);
+		StyleActorGlow(Glow, A);
+	}
 }
 
 function bool ColaHasCheck(CrackolaTrigger Cola)
@@ -8659,7 +8776,7 @@ function int ColaCap(string K)
 	GS = APState();
 	if (GS != None && GS.bGotOptions && !GS.bCrackolaSanity)
 		return 0;
-	if (K ~= "EASTMALL") return 1;
+	if (K ~= "EASTMALL") return 2;
 	if (K ~= "GREENBELT1") return 1;
 	if (K ~= "RWSBLOCK") return 1;
 	if (K ~= "POLICE") return 1;
@@ -8857,11 +8974,116 @@ function string VendorBuyUniqueForPickup(Pickup Item)
 	return "VBUY_"$MapKey()$"_"$TwoDigit(Slot);
 }
 
+// Cabinets within 400 units are one cluster. A side-by-side pair is about
+// 110-130 apart. East Mall's second pair is about 1800 away, on the lower
+// level. Clusters are numbered from the westernmost cabinet so the slot
+// stays put if actor names change.
+function int ColaClusterSlot(CrackolaTrigger Me)
+{
+	local CrackolaTrigger A, List[16];
+	local int Parent[16], ClusterOf[16], CCount[16], Order[16];
+	local int i, j, N, pa, pb, Clusters, c, Tmp;
+	local float MinX[16], MinY[16], MinZ[16];
+	local bool Found;
+
+	if (Me == None)
+		return 0;
+	foreach AllActors(class'CrackolaTrigger', A)
+	{
+		if (N >= 16)
+			break;
+		List[N] = A;
+		Parent[N] = N;
+		N++;
+	}
+	for (i = 0; i < N; i++)
+	{
+		for (j = i + 1; j < N; j++)
+		{
+			if (VSize(List[i].Location - List[j].Location) > 400)
+				continue;
+			pa = i;
+			while (Parent[pa] != pa)
+				pa = Parent[pa];
+			pb = j;
+			while (Parent[pb] != pb)
+				pb = Parent[pb];
+			if (pa != pb)
+				Parent[pb] = pa;
+		}
+	}
+	for (i = 0; i < N; i++)
+	{
+		pa = i;
+		while (Parent[pa] != pa)
+			pa = Parent[pa];
+		Parent[i] = pa;
+	}
+	for (i = 0; i < N; i++)
+	{
+		Found = false;
+		for (j = 0; j < i; j++)
+		{
+			if (Parent[j] == Parent[i])
+			{
+				ClusterOf[i] = ClusterOf[j];
+				Found = true;
+				break;
+			}
+		}
+		if (!Found)
+		{
+			ClusterOf[i] = Clusters;
+			Clusters++;
+		}
+		c = ClusterOf[i];
+		if (CCount[c] == 0 || List[i].Location.X < MinX[c])
+			MinX[c] = List[i].Location.X;
+		if (CCount[c] == 0 || List[i].Location.Y < MinY[c])
+			MinY[c] = List[i].Location.Y;
+		if (CCount[c] == 0 || List[i].Location.Z < MinZ[c])
+			MinZ[c] = List[i].Location.Z;
+		CCount[c]++;
+	}
+	for (i = 0; i < Clusters; i++)
+		Order[i] = i;
+	for (i = 0; i < Clusters; i++)
+	{
+		for (j = i + 1; j < Clusters; j++)
+		{
+			pa = Order[i];
+			pb = Order[j];
+			if (MinX[pb] < MinX[pa]
+				|| (MinX[pb] == MinX[pa] && MinY[pb] < MinY[pa])
+				|| (MinX[pb] == MinX[pa] && MinY[pb] == MinY[pa] && MinZ[pb] < MinZ[pa]))
+			{
+				Tmp = Order[i];
+				Order[i] = Order[j];
+				Order[j] = Tmp;
+			}
+		}
+	}
+	for (i = 0; i < N; i++)
+	{
+		if (List[i] != Me)
+			continue;
+		c = ClusterOf[i];
+		for (j = 0; j < Clusters; j++)
+			if (Order[j] == c)
+				return j + 1;
+	}
+	return 0;
+}
+
 function string ColaUnique(CrackolaTrigger C)
 {
-	local int S;
-	S = NamedActorSlot(C, class'CrackolaTrigger', ColaCap(MapKey()));
-	if (S <= 0)
+	local int S, Cap;
+
+	Cap = ColaCap(MapKey());
+	if (Cap <= 0)
+		return "COLA_"$MapKey()$"_01";
+	S = ColaClusterSlot(C);
+	if (S <= 0 || S > Cap)
 		return "COLA_"$MapKey()$"_01";
 	return "COLA_"$MapKey()$"_"$TwoDigit(S);
 }

@@ -29,6 +29,7 @@ from .data import (
     errand_item_flow_ok,
     choose_map_days,
     choose_vending_counts,
+    counts_as_grey_check,
     FILLER_WEIGHTS,
     TOKEN_UNIQUE_TO_MAP,
     MAPS,
@@ -265,7 +266,7 @@ class Postal2World(World):
                 continue
             if data["name"] == "Water Bottle" and not self.options.piss_realism:
                 continue
-            if not self.options.traps and data["classification"] == "trap":
+            if data["classification"] == "trap" and data["name"] not in self.options.traps.value:
                 continue
             for _ in range(data["count"]):
                 pool.append(self.create_item(data["name"]))
@@ -318,7 +319,7 @@ class Postal2World(World):
             elif cls == prog:
                 continue
             u = n2u.get(loc.name)
-            if u and (not token_u or u in token_u):
+            if counts_as_grey_check(u, token_u):
                 grey.append(u)
         return {
             "goal": "friday",
@@ -327,6 +328,7 @@ class Postal2World(World):
             "clinic_always": True,
             "random_weapon": bool(self.options.random_weapon.value),
             "traps": bool(self.options.traps.value),
+            "trap_types": sorted(self.options.traps.value),
             "vending_sanity": bool(self.options.vending_sanity.value),
             "vending_slots": int(self.options.vending_slots.value),
             "vending_counts": dict(getattr(self, "vending_counts", {})),

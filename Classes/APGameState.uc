@@ -45,6 +45,8 @@ var travel array<int> TokenMapD;
 var travel bool bWarpLibrary;
 var travel bool bWarpBrewery;
 var travel bool bWarpNapalm;
+// Gimp from picking up the napalm errand. Cleared on Napalm Factory Exterior.
+var travel bool bNapalmErrandGimp;
 var travel bool bWarpParcel;
 var travel bool bMeleeDurability;
 var travel bool bPissRealism;

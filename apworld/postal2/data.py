@@ -99,10 +99,10 @@ ATM_CAPS = {
     "WESTMALL": 1,
 }
 
-# Kickable / buyable Crackola machines. Caps are per map, not per cabinet:
-# machines spawn in pairs and share one check. EASTMALL stays 2 in this table
-# so COLA_EASTMALL_02 keeps its location ID; that unique is retired below and
-# the mutator ColaCap is 1 so both cabinets send COLA_EASTMALL_01.
+# Kickable / buyable Crackola machines. One location per cluster, not per
+# cabinet: a side-by-side pair (about 110-130 units apart) shares one check.
+# East Mall has two pairs about 1800 units apart, so both COLA_EASTMALL_01
+# and COLA_EASTMALL_02 are live. The mutator groups cabinets by distance.
 COLA_CAPS = {
     "GREENBELT1": 1,
     "RWSBLOCK": 1,
@@ -582,6 +582,26 @@ def is_oneshot_filler_location(unique: str) -> bool:
     return False
 
 
+# ATM, Crackola, and vending checks can hold filler. Their lights use the
+# same grey list as world tokens.
+_MACHINE_CHECK_PREFIXES = ("ATM_", "COLA_", "VUSE_", "VBUY_")
+
+
+def is_machine_check(unique: str) -> bool:
+    return bool(unique) and unique.startswith(_MACHINE_CHECK_PREFIXES)
+
+
+def counts_as_grey_check(unique: str, token_uniques) -> bool:
+    """True when a filler item at this unique should pulse grey in game."""
+    if not unique:
+        return False
+    if is_machine_check(unique):
+        return True
+    if not token_uniques:
+        return True
+    return unique in token_uniques
+
+
 # Errands that do not block sleeping (none — vanilla to-do list is required)
 SLEEP_SKIP_UNIQUES = set()
 
@@ -617,6 +637,39 @@ TORA_UNIQUES = (
     "ToraMachete", "ToraWMD", "ToraNuke", "ToraRifle", "ToraCowHead",
     "ToraRadar", "ToraCatnip",
 )
+
+# YAML Traps choices. Each one is still placed ITEMS[].count times.
+# true/false in an older YAML means all of these, or none.
+TRAP_NAMES = (
+    "Cat Rain Trap",
+    "Wanted Trap",
+    "Drop Gun Trap",
+    "Protestor Trap",
+    "Piss Trap",
+    "Gimp Trap",
+    "Suicide Bomber Trap",
+)
+
+
+def coerce_trap_selection(value):
+    """Normalize a Traps YAML value to the set of trap item names to place."""
+    if isinstance(value, bool):
+        return set(TRAP_NAMES) if value else set()
+    if isinstance(value, str):
+        low = value.strip().lower()
+        if low in ("true", "yes", "on"):
+            return set(TRAP_NAMES)
+        if low in ("false", "no", "off", ""):
+            return set()
+        if "," in value:
+            return {part.strip() for part in value.split(",") if part.strip()}
+        return {value.strip()}
+    if isinstance(value, int):
+        return set(TRAP_NAMES) if value else set()
+    if value is None:
+        return set(TRAP_NAMES)
+    return {str(name) for name in value}
+
 
 FILLER_NAMES = {
     "$5", "$20", "$100", "Medkit", "Spare Ammo", "Catnip",
@@ -746,7 +799,6 @@ RETIRED_LOCATIONS = frozenset({
     "EastMallBooks",
     "Enter_GREENBELT",
     "Enter_LIBRARY",
-    "COLA_EASTMALL_02",
 }) | RETIRED_NAMED_CACHE_UNIQUES
 
 # Overlay place-names onto live catalog/ATM/Crackola/extra SC_ uniques.
