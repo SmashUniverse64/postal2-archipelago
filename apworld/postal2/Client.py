@@ -16,6 +16,7 @@ from .data import (
     FILLER_NAMES,
     GAME_NAME,
     item_name_to_grant,
+    is_machine_check,
     location_name_to_id,
     location_unique_to_name,
 )
@@ -177,6 +178,7 @@ def _build_context_class():
             self._tcp_state_sent = False
             self._last_catchup = 0.0
             self._vendor_hints: dict[str, tuple[int, int, str]] = {}
+            self._extra_grey: set[str] = set()
             self._game_tcp_seen = False
             self._last_game_drop = 0.0
             self._logged_catchup = False
@@ -236,6 +238,7 @@ def _build_context_class():
                 self._check_queue.clear()
                 self._granted_count = 0
                 self._vendor_hints.clear()
+                self._extra_grey.clear()
                 await self.send_game("SEEDRESET " + (self.ap_seed or "new"))
                 self._seed_changed = False
             else:
@@ -346,8 +349,14 @@ def _build_context_class():
                     + str(int(round(e["z"])))
                 )
             await self.send_game("GREYCLEAR")
+            sent = set()
             for unique in (self.slot_data or {}).get("filler_tokens") or []:
+                sent.add(str(unique))
                 await self.send_game("GREY " + str(unique))
+            for unique in self._extra_grey:
+                if unique in sent:
+                    continue
+                await self.send_game("GREY " + unique)
             await self.send_game("GREYEND")
 
         async def _send_checked(self) -> None:
@@ -395,16 +404,24 @@ def _build_context_class():
                 await self.send_game(self._vendor_hint_line(unique, flags, price, name))
 
         async def _push_vendor_hints(self) -> None:
-            """Replay cached shop names on attach, then scout any that are still missing."""
+            """Replay cached shop names on attach, then scout machine checks."""
             if not (self.slot_data or {}).get("vending_sanity", True):
                 self._vendor_hints.clear()
-                return
-            await self._flush_vendor_hints()
+            else:
+                await self._flush_vendor_hints()
             await self._scout_vendors()
 
+        def _want_machine_scout(self, unique: str) -> bool:
+            slot = self.slot_data or {}
+            if unique.startswith("VBUY_") or unique.startswith("VUSE_"):
+                return bool(slot.get("vending_sanity", True))
+            if unique.startswith("COLA_"):
+                return bool(slot.get("crackola_sanity", True))
+            if unique.startswith("ATM_"):
+                return bool(slot.get("atm_sanity", True))
+            return False
+
         async def _scout_vendors(self) -> None:
-            if not (self.slot_data or {}).get("vending_sanity", True):
-                return
             ids = []
             known = set(self.missing_locations or ()) | set(self.locations_checked or ())
             for loc_id in known:
@@ -413,7 +430,7 @@ def _build_context_class():
                 except Exception:
                     continue
                 unique = NAME_TO_UNIQUE.get(name)
-                if unique and unique.startswith("VBUY_"):
+                if unique and self._want_machine_scout(unique):
                     ids.append(int(loc_id))
             if ids:
                 await self.send_msgs([{"cmd": "LocationScouts", "locations": ids}])
@@ -434,11 +451,14 @@ def _build_context_class():
                 except Exception:
                     item_name = self.item_names.lookup_in_game(item_id)
                 unique = NAME_TO_UNIQUE.get(loc_name)
-                if unique and item_name:
-                    if isinstance(ni, dict):
-                        flags = int(ni.get("flags", 0) or 0)
-                    else:
-                        flags = int(getattr(ni, "flags", 0) or 0)
+                if isinstance(ni, dict):
+                    flags = int(ni.get("flags", 0) or 0)
+                else:
+                    flags = int(getattr(ni, "flags", 0) or 0)
+                if unique and is_machine_check(unique) and (flags & 0b011) == 0:
+                    self._extra_grey.add(unique)
+                    await self.send_game("GREY " + unique)
+                if unique and unique.startswith("VBUY_") and item_name:
                     price = vendor_price(unique, flags, self.ap_seed or "", str(item_name))
                     clean = str(item_name).replace("\r", " ").replace("\n", " ").strip()
                     self._vendor_hints[unique] = (int(flags), int(price), clean)

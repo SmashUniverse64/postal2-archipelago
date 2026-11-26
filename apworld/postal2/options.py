@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
-from Options import Choice, DeathLink, PerGameCommonOptions, Range, Toggle
+from Options import Choice, DeathLink, OptionSet, PerGameCommonOptions, Range, Toggle
+
+from .data import TRAP_NAMES, coerce_trap_selection
 
 
 class StartingDay(Choice):
@@ -34,22 +36,30 @@ class RandomWeapon(Toggle):
     default = True
 
 
-class Traps(Toggle):
-    """When on, cat rain, wanted, drop-gun, protestor, piss, and gimp traps
-    are in the item pool. When off, those slots become extra filler."""
+class Traps(OptionSet):
+    """Choose which traps can appear. Each trap you leave on is still placed
+    twice. Traps you turn off are replaced with normal junk, and the ones you
+    keep are not any more common. All of them are on by default. An older YAML
+    that says true or false still works: true means every trap, false means
+    none."""
     display_name = "Traps"
-    default = True
+    valid_keys = TRAP_NAMES
+    default = frozenset(TRAP_NAMES)
+
+    @classmethod
+    def from_any(cls, data):
+        return cls(coerce_trap_selection(data))
 
 
 class VendingSanity(Toggle):
-    """ATF / fast-food machines: opening the menu is a check, and each machine
-    can sell unique Archipelago items (names shown in the menu)."""
+    """Turns ATF Vending Machines into locations to check: opening the menu
+    is a check, and each machine can sell unique Archipelago items."""
     display_name = "Vending Sanity"
     default = True
 
 
 class VendingSlots(Range):
-    """Maximum Archipelago parcels each ATF / fast-food machine can sell.
+    """Maximum Archipelago parcels each Vending Machine can sell.
     Each machine rolls 0 through this number when the seed is generated.
     Default 3. Ignored if Vending Sanity is off."""
     display_name = "Max Vending Items"
@@ -95,8 +105,10 @@ class ATMSanity(Toggle):
 
 
 class TokenGlow(Toggle):
-    """Rainbow light on Archipelago world tokens and on ATM, Crackola, and
-    vending machines that still have checks. Turn off for a darker hunt."""
+    """Turn on a rainbow-colored light on useful and progression Archipelago
+    tokens, and on ATM, Crackola, and vending machines that still hold one
+    of those checks. Filler and trap pulse grey light instead. Turn off for
+    a more difficult experience."""
     display_name = "Token Glow"
     default = True
 
@@ -118,11 +130,14 @@ class MeleeDurability(Toggle):
 
 
 class PissRealism(Toggle):
-    """Bladder starts nearly empty and refills slowly. Near full the Dude
-    complains that he has to pee. At 20/20 he takes damage until he goes.
-    Once you start peeing you cannot zip up until the meter is under 10.
-    Water bottles ($5 at every vending machine, also junk) and Crackola each add 5.
-    Off by default. Regen seconds is Piss Regen Seconds."""
+    """Changes default piss behavior completely for a unique (and more
+    difficult) experience. Your bladder starts nearly empty and refills
+    slowly. At max bladder, you take damage until you go. Once you start
+    pissing you cannot zip up until the meter is under 10. Enabling this
+    option adds water bottles to Vending Machines ($5 at every vending
+    machine) that instantly restore 5 bladder. Drinking Crackola also adds
+    5 bladder. Off by default. Adjust how fast piss regenerates in Piss
+    Regen Seconds."""
     display_name = "Piss Realism"
     default = False
 

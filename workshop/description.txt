@@ -7,7 +7,7 @@ You also need Archipelago 0.6.x, postal2.apworld, a locally generated seed, and 
 Download the matching apworld, YAML, and Postal 2 Client from GitHub:
 https://github.com/SmashUniverse64/postal2-archipelago/releases
 
-Keep Workshop and GitHub on the same version (currently 1.1.0).
+Keep Workshop and GitHub on the same version (currently 1.1.1).
 
 How to play
 1. Install Archipelago 0.6.x from https://archipelago.gg

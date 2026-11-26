@@ -2,7 +2,7 @@
 
 Unofficial Archipelago world for the original Monday–Friday campaign. Website generate cannot run this world until it is in Archipelago core: generate locally. Hosts can upload a pre-generated zip.
 
-You need **both** pieces on the same version (currently **1.1.0**): this `postal2.apworld`, and the in-game mutator (`Archipelago.u` + `Archipelago.int`) from Steam Workshop or the matching GitHub Release.
+You need **both** pieces on the same version (currently **1.1.1**): this `postal2.apworld`, and the in-game mutator (`Archipelago.u` + `Archipelago.int`) from Steam Workshop or the matching GitHub Release.
 
 1. Install [Archipelago 0.6.x](https://archipelago.gg).
 2. Install this `postal2.apworld` (Launcher → Install APWorld, or copy into `custom_worlds`). Restart the Launcher.
@@ -15,7 +15,7 @@ You need **both** pieces on the same version (currently **1.1.0**): this `postal
 
 Paradise Lost, Apocalypse Weekend as its own campaign, Eternal Damnation, and seasonal overlays are not part of this world. Workshop saves are flagged cheated; achievements stay off.
 
-Moving to a new **0.x** or **1.x** line usually needs a **new seed**. Stay on current **1.1.0** unless you are generating.
+Moving to a new **0.x** or **1.x** line usually needs a **new seed**. Stay on current **1.1.1** unless you are generating.
 
 ## Versions
 
@@ -63,11 +63,11 @@ First successful playtest through 0.9.46.
 
 **Vending.** Machines show the real Archipelago item name and the scouted price (cash is $5 / $20 / $100). ATF/fast-food machines sell Weapon Repair Kits for $50 when Melee Durability is on. The weapon wheel draws a durability bar on melee icons.
 
-**World checks.** Mapped pickups use place names in hints/spoilers/tracker. YAML **Lootsanity** turns every eligible loot pile into an AP token (blocked piles stay out; hunt days still pick which maps spawn). Map overlay titles match in-game names (Trainyard Area, Industrial Area, Church and Cemetery) with related districts stacked together, including Napalm Factory Exterior over Napalm Factory, and Sewers / Tora Bora to the right of Home. Checkmarks: cyan visited, gold AP tokens done, blue Crackola, magenta ATMs, red vending; a legend sits in the bottom-right. Clearing an area’s last AP token plays one of the Dude’s map-screen errand-complete lines. East Mall’s paired Crackola cabinets share one check. **Hint Flare** is a junk item (also $30 on those vending machines) that fires a harmless noclip rocket from every AP token; cluster bursts use the rocket-launcher explosion, with one boom per flare. Token heartbeat hear-distance is 3000. Dropped Ghetto Glock Ammo 4 (derailed train bridge, cheat-only) and Police Station Catnip 1 (inside a box). Generate a **new seed** after Catnip 1.
+**World checks.** Mapped pickups use place names in hints/spoilers/tracker. YAML **Lootsanity** turns every eligible loot pile into an AP token (blocked piles stay out; hunt days still pick which maps spawn). Map overlay titles match in-game names (Trainyard Area, Industrial Area, Church and Cemetery) with related districts stacked together, including Napalm Factory Exterior over Napalm Factory, and Sewers / Tora Bora to the right of Home. Checkmarks: cyan visited, gold AP tokens done, blue Crackola, magenta ATMs, red vending; a legend sits in the bottom-right. Clearing an area’s last AP token plays one of the Dude’s map-screen errand-complete lines. Each side-by-side Crackola pair shares one check. East Mall has two pairs. With Token Glow on, vending machines, Crackola machines, and ATMs rainbow while a useful or progression item remains and pulse grey when every remaining check is filler or a trap. Token Glow off leaves those lights off. **Hint Flare** is a junk item (also $30 on those vending machines) that fires a harmless noclip rocket from every AP token; cluster bursts use the rocket-launcher explosion, with one boom per flare. Token heartbeat hear-distance is 3000. Dropped Ghetto Glock Ammo 4 (derailed train bridge, cheat-only) and Police Station Catnip 1 (inside a box). Generate a **new seed** after Catnip 1.
 
 **Stability.** Home/Brewery map loads no longer runaway-loop (pickups, weapon selector, inventory, unlock list). Reconnect no longer replays Drop Gun and other traps into the loadout. Token counts match Archipelago’s checked list. Scroll wheel works after errand cutscenes; map travel no longer duplicates Sledge/Molotov. New Game holds you at Monday Home until the Postal 2 Client is connected and your first Monday errand is granted (center prompt only, once per session). Connecting the client while frozen should unfreeze in place; the mutator retries TCP every 2s and asks for catch-up until the Monday starter arrives. Leaving Home or receiving the starter never shows that prompt again, including across map loads. Brewery gimp escape does not grant Dude clothes. Map travel still rehooks TCP, but the client log no longer prints Postal 2 connected/disconnected for those brief drops. Starting without Skip Intro no longer crashes on the Monday errand map if the client is not connected yet. A Piss trap at Monday spawn no longer leaves weapon switching dead until the next map. The overlay-only left hand is kept off the weapon wheel so slot 1 is a single Hands.
 
-**Suicide Bomber Trap.** Spawns the Tuesday/Home suicide-bomber NPC unarmed on walkable ground at least 1000 units from you (search reaches about 4800). They charge until you shoot them or they close in. The blast is grenade-strength (130 damage, 450 radius). Two copies in the trap pool. Generate a **new seed**. Restart Postal 2 Client and Postal 2.
+**Suicide Bomber Trap.** Spawns the Tuesday/Home suicide-bomber NPC unarmed on walkable ground at least 1000 units from you (search reaches about 4800). They charge until you shoot them or they close in. The blast is grenade-strength (130 damage, 450 radius). Two copies in the trap pool. The Traps option chooses which kinds can appear, and each kind you leave on is still placed twice. Generate a **new seed**. Restart Postal 2 Client and Postal 2.
 
 **Melee pool.** Dusters and Bali (butterfly knife) are shuffled unlocks like the other melee weapons, including Random Weapon at the start of the week. World piles stay locked until you receive the item. Generate a **new seed**. Restart Postal 2 Client and Postal 2.
 
@@ -83,6 +83,9 @@ Starting day and a shuffled week.
 **Piss Realism.** YAML `piss_realism` (off by default). Bladder starts at 1/20. Regen seconds is YAML `piss_regen` (default 120, range 30–180). Near 18/20 the Dude uses the Friday clinic “have to pee” lines. At 20/20 he takes 1 damage per second (`GonorrheaDamage`, cannot kill) until he goes. Once he starts peeing he cannot zip up until the meter is under 10. Water bottles are $5 on every vending machine and add 5 instantly; Crackola also adds 5. With the option on, Water Bottles are also junk in the item pool (grey AP tokens, 8 copies plus leftover filler). Restart Postal 2 and Postal 2 Client; pack apworld. Generate a **new seed** for bottles in the pool or to change regen.
 
 **Lootsanity pause map.** Opening the map with Lootsanity no longer runaway-loops remaining-token counts (`CountCatalogLeftForMap`). Counts are cached after catch-up instead of scanning every catalog unique every frame. Restart Postal 2; same save.
+
+### 1.1.1
+Same seeds as 1.1.0. The world version is 1.1.1. Generate a **new seed** for the second East Mall Crackola check and to choose which traps are in the pool. The napalm errand gimp suit comes off when Napalm Factory Exterior loads. Vending machines, Crackola machines, and ATMs pulse grey when every remaining check is filler or a trap. Restart the Archipelago Launcher after installing the apworld, and restart Postal 2 after replacing the mutator.
 
 ### 1.1
 First public release. Generate a **new seed**. Delete `lootsanity` from an older `postal2.yaml` before you generate. Restart the Archipelago Launcher after installing the apworld, and restart Postal 2 after replacing the mutator.

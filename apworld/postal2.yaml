@@ -10,7 +10,14 @@ Postal 2:
   starting_day: monday  # monday, tuesday, wednesday, thursday, friday, or random
   shuffle_weapons: true
   random_weapon: true
-  traps: true
+  traps:  # each chosen trap is still placed twice; true or false still means all or none
+    - Cat Rain Trap
+    - Wanted Trap
+    - Drop Gun Trap
+    - Protestor Trap
+    - Piss Trap
+    - Gimp Trap
+    - Suicide Bomber Trap
   vending_sanity: true
   vending_slots: 3
   max_tokens: 12
